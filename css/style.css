@@ -2,6 +2,109 @@
     padding: var(--spacing-xl) 0;
 }
 
+/* ==================== CONTACT SECTION ==================== */
+.contact-section {
+    padding: var(--spacing-xl) 0;
+}
+
+.contact-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.contact-card {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    transition: var(--transition-base);
+}
+
+.contact-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-card {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+}
+
+.tiktok-card {
+    background: linear-gradient(135deg, #1f2937, #000000);
+    color: white;
+}
+
+.contact-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.contact-icon {
+    width: 64px;
+    height: 64px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-3xl);
+    transition: var(--transition-base);
+}
+
+.contact-card:hover .contact-icon {
+    transform: scale(1.1);
+}
+
+.contact-info h4 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.whatsapp-card .contact-info p {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.tiktok-card .contact-info p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.contact-number {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    font-family: monospace;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.working-hours {
+    background: linear-gradient(135deg, #f5f3ef, #ebe8e1);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.working-hours h4 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.working-hours p {
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
 /* ==================== PAYMENT METHODS SECTION ==================== */
 .payment-section {
     background: white;
@@ -118,8 +221,7 @@
     margin: 0;
 }
 
-/* ==================== CONTACT SECTION ==================== */
-.contact-section {/* ==================== ROOT VARIABLES ==================== */
+/* ==================== FOOTER ==================== *//* ==================== ROOT VARIABLES ==================== */
 :root {
     /* Colors - Warm Greige Theme */
     --primary-color: #b6aa8e;
