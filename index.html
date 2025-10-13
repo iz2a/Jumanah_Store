@@ -232,68 +232,47 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="container mx-auto px-4 py-20">
-        <div class="max-w-3xl mx-auto">
-            <div class="text-center mb-12">
-                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    تواصل معنا
-                </h3>
-                <p class="text-gray-600 text-lg">
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">تواصل معنا</h3>
+                <p class="section-description">
                     نحن هنا للإجابة على استفساراتك ومساعدتك
                 </p>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
-                <a
-                    href={`https://wa.me/${STORE_CONFIG.whatsapp}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                >
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Phone class="w-8 h-8" />
+            <div class="contact-cards">
+                <a href="https://wa.me/966503780023" target="_blank" class="contact-card whatsapp-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
                         </div>
-                        <div>
-                            <h4 class="text-2xl font-bold">واتساب</h4>
-                            <p class="text-green-100">تواصل معنا مباشرة</p>
+                        <div class="contact-info">
+                            <h4>واتساب</h4>
+                            <p>تواصل معنا مباشرة</p>
                         </div>
                     </div>
-                    <p class="text-xl font-mono bg-white/10 backdrop-blur-sm px-4 py-3 rounded-xl text-center">
-                        {STORE_CONFIG.whatsapp}
-                    </p>
+                    <div class="contact-number">0503780023</div>
                 </a>
 
-                <a
-                    href={`https://www.tiktok.com/${STORE_CONFIG.tiktok}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="group bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-                >
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <MessageCircle class="w-8 h-8" />
+                <a href="https://www.tiktok.com/@jum.za" target="_blank" class="contact-card tiktok-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon">
+                            <i class="fab fa-tiktok"></i>
                         </div>
-                        <div>
-                            <h4 class="text-2xl font-bold">تيك توك</h4>
-                            <p class="text-gray-300">تابعنا على تيك توك</p>
+                        <div class="contact-info">
+                            <h4>تيك توك</h4>
+                            <p>تابعنا على تيك توك</p>
                         </div>
                     </div>
-                    <p class="text-xl font-mono bg-white/10 backdrop-blur-sm px-4 py-3 rounded-xl text-center">
-                        {STORE_CONFIG.tiktok}
-                    </p>
+                    <div class="contact-number">@jum.za</div>
                 </a>
             </div>
 
-            <!-- Quick Contact Info -->
-            <div class="mt-12 bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-3xl shadow-lg">
-                <h4 class="text-xl font-bold text-gray-900 mb-4 text-center">
-                    أوقات العمل
-                </h4>
-                <div class="space-y-2 text-center text-gray-700">
-                    <p>السبت - الخميس: 9:00 ص - 9:00 م</p>
-                    <p>الجمعة: 4:00 م - 10:00 م</p>
-                </div>
+            <div class="working-hours">
+                <h4>أوقات العمل</h4>
+                <p>السبت - الخميس: 9:00 ص - 9:00 م</p>
+                <p>الجمعة: 4:00 م - 10:00 م</p>
             </div>
         </div>
     </section>
