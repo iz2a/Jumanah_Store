@@ -19,6 +19,7 @@ function initializeApp() {
     loadProducts(currentCategory);
     
     // Initialize cart
+    loadCartFromStorage();
     updateCartDisplay();
     
     // Setup event listeners
@@ -33,21 +34,29 @@ function setupEventListeners() {
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const navMobile = document.getElementById('nav-mobile');
     
-    mobileMenuBtn.addEventListener('click', function() {
-        navMobile.classList.toggle('active');
-        const icon = mobileMenuBtn.querySelector('i');
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-times');
-    });
+    if (mobileMenuBtn && navMobile) {
+        mobileMenuBtn.addEventListener('click', function() {
+            navMobile.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            }
+        });
+    }
     
     // Close mobile menu when clicking on links
     const navLinks = document.querySelectorAll('.nav-mobile a');
     navLinks.forEach(link => {
         link.addEventListener('click', function() {
-            navMobile.classList.remove('active');
-            const icon = mobileMenuBtn.querySelector('i');
-            icon.classList.add('fa-bars');
-            icon.classList.remove('fa-times');
+            if (navMobile) {
+                navMobile.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.add('fa-bars');
+                    icon.classList.remove('fa-times');
+                }
+            }
         });
     });
     
@@ -57,19 +66,29 @@ function setupEventListeners() {
     const cartClose = document.getElementById('cart-close');
     const cartOverlay = document.getElementById('cart-overlay');
     
-    cartBtn.addEventListener('click', function() {
-        cartSidebar.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
+    if (cartBtn && cartSidebar) {
+        cartBtn.addEventListener('click', function() {
+            cartSidebar.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
     
-    cartClose.addEventListener('click', closeCartSidebar);
-    cartOverlay.addEventListener('click', closeCartSidebar);
+    if (cartClose) {
+        cartClose.addEventListener('click', closeCartSidebar);
+    }
+    
+    if (cartOverlay) {
+        cartOverlay.addEventListener('click', closeCartSidebar);
+    }
     
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '#!') return;
+            
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const target = document.querySelector(href);
             if (target) {
                 target.scrollIntoView({
                     behavior: 'smooth',
@@ -80,15 +99,20 @@ function setupEventListeners() {
     });
 }
 
-function closeCartSidebar() {
+// Make closeCartSidebar global
+window.closeCartSidebar = function() {
     const cartSidebar = document.getElementById('cart-sidebar');
-    cartSidebar.classList.remove('active');
-    document.body.style.overflow = '';
+    if (cartSidebar) {
+        cartSidebar.classList.remove('active');
+        document.body.style.overflow = '';
+    }
 }
 
 // ==================== CATEGORIES ====================
 function loadCategories() {
     const categoryFilter = document.getElementById('category-filter');
+    if (!categoryFilter) return;
+    
     categoryFilter.innerHTML = '';
     
     CATEGORIES.forEach(category => {
@@ -115,6 +139,8 @@ function loadCategories() {
 // ==================== PRODUCTS ====================
 function loadProducts(categoryId) {
     const productsGrid = document.getElementById('products-grid');
+    if (!productsGrid) return;
+    
     productsGrid.innerHTML = '';
     
     const products = getProductsByCategory(categoryId);
@@ -209,7 +235,7 @@ function createProductCard(product) {
                     </div>
                     ${originalPriceHtml}
                 </div>
-                <button class="add-to-cart-btn" onclick="addToCart('${product.id}')" ${!product.inStock ? 'disabled' : ''}>
+                <button class="add-to-cart-btn" onclick="window.addToCartGlobal('${product.id}')" ${!product.inStock ? 'disabled' : ''}>
                     <i class="fas fa-shopping-cart"></i>
                     أضف للسلة
                 </button>
@@ -225,17 +251,21 @@ function showNotification(message, type = 'success') {
     const notification = document.getElementById('notification');
     const notificationText = document.getElementById('notification-text');
     
+    if (!notification || !notificationText) return;
+    
     notificationText.textContent = message;
     notification.classList.remove('hidden');
     
     // Change icon based on type
     const icon = notification.querySelector('i');
-    if (type === 'success') {
-        icon.className = 'fas fa-check-circle';
-    } else if (type === 'info') {
-        icon.className = 'fas fa-info-circle';
-    } else if (type === 'warning') {
-        icon.className = 'fas fa-exclamation-circle';
+    if (icon) {
+        if (type === 'success') {
+            icon.className = 'fas fa-check-circle';
+        } else if (type === 'info') {
+            icon.className = 'fas fa-info-circle';
+        } else if (type === 'warning') {
+            icon.className = 'fas fa-exclamation-circle';
+        }
     }
     
     // Auto hide after 3 seconds
@@ -244,10 +274,16 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
+// Make showNotification global
+window.showNotification = showNotification;
+
 // ==================== GLOBAL ADD TO CART ====================
-function addToCart(productId) {
+window.addToCartGlobal = function(productId) {
     const product = getProductById(productId);
-    if (!product) return;
+    if (!product) {
+        console.error('Product not found:', productId);
+        return;
+    }
     
     addProductToCart(product);
     showNotification('تم إضافة المنتج للسلة');
