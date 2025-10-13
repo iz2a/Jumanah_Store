@@ -1,4 +1,125 @@
-/* ==================== ROOT VARIABLES ==================== */
+.contact-section {
+    padding: var(--spacing-xl) 0;
+}
+
+/* ==================== PAYMENT METHODS SECTION ==================== */
+.payment-section {
+    background: white;
+    padding: var(--spacing-xl) 0;
+}
+
+.payment-methods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.payment-method-card {
+    background: #faf9f7;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
+    text-align: center;
+    transition: var(--transition-base);
+    border: 2px solid transparent;
+}
+
+.payment-method-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: #b6aa8e;
+}
+
+.payment-method-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-md);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-3xl);
+    color: white;
+}
+
+.bank-icon {
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
+}
+
+.stc-icon {
+    background: linear-gradient(135deg, #4c1d95, #7c3aed);
+}
+
+.cod-icon {
+    background: linear-gradient(135deg, #059669, #10b981);
+}
+
+.payment-method-card h4 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.payment-method-card p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+.payment-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.payment-badge.popular {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.payment-badge.instant {
+    background: #ddd6fe;
+    color: #5b21b6;
+}
+
+.payment-badge.available {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.payment-info-box {
+    background: linear-gradient(135deg, #f5f3ef, #ebe8e1);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-md);
+}
+
+.payment-info-box i {
+    font-size: var(--font-size-2xl);
+    color: #b6aa8e;
+    flex-shrink: 0;
+}
+
+.payment-info-box p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ==================== CONTACT SECTION ==================== */
+.contact-section {/* ==================== ROOT VARIABLES ==================== */
 :root {
     /* Colors - Warm Greige Theme */
     --primary-color: #b6aa8e;
@@ -1060,7 +1181,32 @@ img {
 .footer-products {
     color: rgba(255, 255, 255, 0.6);
     font-size: var(--font-size-sm);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-legal {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.legal-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.legal-text i {
+    color: #f59e0b;
 }
 
 .footer-copyright {
