@@ -440,7 +440,7 @@ img {
 .title-divider {
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(90deg, #b6aa8e, #c9bfa8);
     margin: var(--spacing-md) auto;
     border-radius: var(--radius-full);
 }
@@ -645,7 +645,7 @@ img {
 }
 
 .benefit-tag i {
-    color: var(--primary-color);
+    color: #b6aa8e;
     font-size: 10px;
 }
 
@@ -727,7 +727,7 @@ img {
 }
 
 .about-box {
-    background: linear-gradient(135deg, var(--bg-accent), #d1fae5);
+    background: linear-gradient(135deg, #f5f3ef, #ebe8e1);
     padding: var(--spacing-lg);
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
@@ -743,7 +743,7 @@ img {
 .logo-icon-large {
     width: 64px;
     height: 64px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
     border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
@@ -757,7 +757,7 @@ img {
 .logo-text-large h2 {
     font-size: var(--font-size-3xl);
     font-weight: 800;
-    color: var(--primary-dark);
+    color: #9d9179;
 }
 
 .logo-text-large p {
@@ -779,7 +779,7 @@ img {
 }
 
 .text-primary {
-    color: var(--primary-color);
+    color: #b6aa8e;
 }
 
 .features-list {
@@ -930,7 +930,7 @@ img {
 }
 
 .working-hours {
-    background: linear-gradient(135deg, var(--bg-accent), #d1fae5);
+    background: linear-gradient(135deg, #f5f3ef, #ebe8e1);
     padding: var(--spacing-lg);
     border-radius: var(--radius-xl);
     text-align: center;
@@ -951,7 +951,7 @@ img {
 
 /* ==================== FOOTER ==================== */
 .footer {
-    background: linear-gradient(135deg, #064e3b, #0f766e, #0e7490);
+    background: linear-gradient(135deg, #8b8371, #9d9179, #b6aa8e);
     color: white;
     padding: var(--spacing-xl) 0;
 }
@@ -1075,7 +1075,7 @@ img {
 }
 
 .cart-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
     color: white;
     padding: var(--spacing-md);
 }
@@ -1287,7 +1287,7 @@ img {
 }
 
 .summary-row.total .summary-value {
-    color: var(--primary-color);
+    color: #b6aa8e;
 }
 
 .free-shipping-notice {
@@ -1347,7 +1347,7 @@ img {
     top: var(--spacing-md);
     right: var(--spacing-md);
     z-index: 300;
-    background: var(--primary-color);
+    background: #b6aa8e;
     color: white;
     padding: var(--spacing-md) var(--spacing-lg);
     border-radius: var(--radius-lg);
