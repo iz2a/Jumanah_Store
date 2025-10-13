@@ -191,6 +191,32 @@
         font-size: var(--font-size-base);
     }
     
+    /* Payment Methods */
+    .payment-section {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .payment-methods-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .payment-method-card {
+        padding: var(--spacing-md);
+    }
+    
+    .payment-method-icon {
+        width: 64px;
+        height: 64px;
+        font-size: var(--font-size-2xl);
+    }
+    
+    .payment-info-box {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--spacing-sm);
+    }
+    
     /* Contact */
     .contact-section {
         padding: var(--spacing-lg) 0;
@@ -470,9 +496,9 @@
     }
 }
 
-/* Dark mode support (optional) 
+/* Dark mode support (optional) */
 @media (prefers-color-scheme: dark) {
-  
+    /* Uncomment and customize if you want dark mode support
     :root {
         --text-primary: #f9fafb;
         --text-secondary: #d1d5db;
@@ -483,5 +509,5 @@
     body {
         background: #0f172a;
     }
+    */
 }
-*/
