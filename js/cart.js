@@ -9,6 +9,7 @@ function loadCartFromStorage() {
     if (savedCart) {
         try {
             cart = JSON.parse(savedCart);
+            console.log('Cart loaded from storage:', cart);
         } catch (e) {
             console.error('Error loading cart:', e);
             cart = [];
@@ -18,37 +19,37 @@ function loadCartFromStorage() {
 
 // Save cart to localStorage
 function saveCartToStorage() {
-    localStorage.setItem('jumanah_cart', JSON.stringify(cart));
+    try {
+        localStorage.setItem('jumanah_cart', JSON.stringify(cart));
+        console.log('Cart saved to storage');
+    } catch (e) {
+        console.error('Error saving cart:', e);
+    }
 }
 
 // ==================== CART OPERATIONS ====================
 
-/**
- * Add product to cart
- * @param {Object} product - Product object
- */
 function addProductToCart(product) {
+    console.log('Adding to cart:', product);
     const existingItem = cart.find(item => item.id === product.id);
     
     if (existingItem) {
         existingItem.quantity += 1;
+        console.log('Updated quantity for existing item');
     } else {
         cart.push({
             ...product,
             quantity: 1
         });
+        console.log('Added new item to cart');
     }
     
     saveCartToStorage();
     updateCartDisplay();
 }
 
-/**
- * Update product quantity in cart
- * @param {string} productId - Product ID
- * @param {number} newQuantity - New quantity
- */
 function updateCartQuantity(productId, newQuantity) {
+    console.log('Updating quantity:', productId, newQuantity);
     if (newQuantity < 1) {
         removeFromCart(productId);
         return;
@@ -62,79 +63,64 @@ function updateCartQuantity(productId, newQuantity) {
     }
 }
 
-/**
- * Remove product from cart
- * @param {string} productId - Product ID
- */
 function removeFromCart(productId) {
+    console.log('Removing from cart:', productId);
     cart = cart.filter(item => item.id !== productId);
     saveCartToStorage();
     updateCartDisplay();
-    showNotification('تم حذف المنتج من السلة', 'info');
+    if (typeof showNotification === 'function') {
+        showNotification('تم حذف المنتج من السلة', 'info');
+    }
 }
 
-/**
- * Clear entire cart
- */
 function clearCart() {
+    console.log('Clearing cart');
     cart = [];
     saveCartToStorage();
     updateCartDisplay();
-    showNotification('تم إفراغ السلة', 'info');
+    if (typeof showNotification === 'function') {
+        showNotification('تم إفراغ السلة', 'info');
+    }
 }
 
-/**
- * Get cart total items count
- * @returns {number} Total number of items
- */
 function getCartItemsCount() {
     return cart.reduce((total, item) => total + item.quantity, 0);
 }
 
-/**
- * Get cart subtotal
- * @returns {number} Subtotal amount
- */
 function getCartSubtotal() {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 }
 
-/**
- * Get shipping cost
- * @param {number} subtotal - Cart subtotal
- * @returns {number} Shipping cost
- */
 function getShippingCost(subtotal) {
+    if (typeof STORE_CONFIG === 'undefined') return 15;
     return subtotal >= STORE_CONFIG.freeShippingThreshold ? 0 : STORE_CONFIG.shippingCost;
 }
 
-/**
- * Get cart total (with shipping)
- * @returns {number} Total amount
- */
 function getCartTotal() {
     const subtotal = getCartSubtotal();
     const shipping = getShippingCost(subtotal);
     return subtotal + shipping;
 }
 
+// Make functions globally accessible
+window.addProductToCart = addProductToCart;
+window.updateCartQuantity = updateCartQuantity;
+window.removeFromCart = removeFromCart;
+window.clearCart = clearCart;
+window.sendWhatsAppOrder = sendWhatsAppOrder;
+
 // ==================== CART DISPLAY ====================
 
-/**
- * Update cart display (header badge and sidebar)
- */
 function updateCartDisplay() {
     updateCartBadge();
     updateCartSidebar();
 }
 
-/**
- * Update cart badge in header
- */
 function updateCartBadge() {
     const cartCount = document.getElementById('cart-count');
-    const itemsCount = getCartItemsCount();
+    if (!cartCount) return;
     
+    const itemsCount = getCartItemsCount();
     cartCount.textContent = itemsCount;
     
     if (itemsCount > 0) {
@@ -144,17 +130,15 @@ function updateCartBadge() {
     }
 }
 
-/**
- * Update cart sidebar content
- */
 function updateCartSidebar() {
     const cartItemsCount = document.getElementById('cart-items-count');
     const cartItems = document.getElementById('cart-items');
     const cartFooter = document.getElementById('cart-footer');
     
+    if (!cartItemsCount || !cartItems || !cartFooter) return;
+    
     const itemsCount = getCartItemsCount();
     
-    // Update items count text
     if (itemsCount === 0) {
         cartItemsCount.textContent = 'السلة فارغة';
     } else if (itemsCount === 1) {
@@ -167,7 +151,6 @@ function updateCartSidebar() {
         cartItemsCount.textContent = `${itemsCount} منتج`;
     }
     
-    // Update cart items
     if (cart.length === 0) {
         cartItems.innerHTML = `
             <div class="cart-empty">
@@ -176,52 +159,45 @@ function updateCartSidebar() {
                 </div>
                 <h4>السلة فارغة</h4>
                 <p>ابدأ بإضافة المنتجات</p>
-                <button class="btn btn-primary" onclick="closeCartSidebar(); document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
+                <button class="btn btn-primary" onclick="window.closeCartSidebar(); document.getElementById('products').scrollIntoView({behavior: 'smooth'})">
                     تسوق الآن
                 </button>
             </div>
         `;
         cartFooter.innerHTML = '';
     } else {
-        // Render cart items
         cartItems.innerHTML = cart.map(item => createCartItemHTML(item)).join('');
-        
-        // Render cart footer with summary
         cartFooter.innerHTML = createCartFooterHTML();
     }
 }
 
-/**
- * Create HTML for cart item
- * @param {Object} item - Cart item
- * @returns {string} HTML string
- */
 function createCartItemHTML(item) {
     const subtotal = item.price * item.quantity;
+    const currency = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.currency : 'ريال';
     
     return `
         <div class="cart-item">
             <div class="cart-item-header">
-                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                <img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="this.src='https://via.placeholder.com/96x96?text=صورة'">
                 <div class="cart-item-info">
                     <h4 class="cart-item-name">${item.name}</h4>
-                    <p class="cart-item-price">${item.price} ${STORE_CONFIG.currency}</p>
+                    <p class="cart-item-price">${item.price} ${currency}</p>
                     ${item.weight ? `<p class="cart-item-weight">${item.weight}</p>` : ''}
                 </div>
             </div>
             <div class="cart-item-controls">
                 <div class="quantity-controls">
-                    <button class="quantity-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity - 1})" aria-label="تقليل الكمية">
+                    <button class="quantity-btn" onclick="window.updateCartQuantity('${item.id}', ${item.quantity - 1})" aria-label="تقليل الكمية">
                         <i class="fas fa-minus"></i>
                     </button>
                     <span class="quantity-value">${item.quantity}</span>
-                    <button class="quantity-btn" onclick="updateCartQuantity('${item.id}', ${item.quantity + 1})" aria-label="زيادة الكمية">
+                    <button class="quantity-btn" onclick="window.updateCartQuantity('${item.id}', ${item.quantity + 1})" aria-label="زيادة الكمية">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
                 <div class="cart-item-subtotal">
-                    <span class="subtotal-value">${subtotal} ${STORE_CONFIG.currency}</span>
-                    <button class="remove-btn" onclick="removeFromCart('${item.id}')" aria-label="حذف من السلة">
+                    <span class="subtotal-value">${subtotal} ${currency}</span>
+                    <button class="remove-btn" onclick="window.removeFromCart('${item.id}')" aria-label="حذف من السلة">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
@@ -230,31 +206,29 @@ function createCartItemHTML(item) {
     `;
 }
 
-/**
- * Create HTML for cart footer (summary and actions)
- * @returns {string} HTML string
- */
 function createCartFooterHTML() {
     const subtotal = getCartSubtotal();
     const shipping = getShippingCost(subtotal);
     const total = getCartTotal();
+    const currency = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.currency : 'ريال';
+    const freeShippingThreshold = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.freeShippingThreshold : 100;
     
-    const freeShippingNotice = subtotal > 0 && subtotal < STORE_CONFIG.freeShippingThreshold ? `
+    const freeShippingNotice = subtotal > 0 && subtotal < freeShippingThreshold ? `
         <p class="free-shipping-notice">
             <i class="fas fa-info-circle"></i>
-            أضف ${STORE_CONFIG.freeShippingThreshold - subtotal} ${STORE_CONFIG.currency} للحصول على توصيل مجاني
+            أضف ${freeShippingThreshold - subtotal} ${currency} للحصول على توصيل مجاني
         </p>
     ` : '';
     
     const shippingText = shipping === 0 ? 
         '<span style="color: #059669; font-weight: 700;">مجاناً</span>' : 
-        `${shipping} ${STORE_CONFIG.currency}`;
+        `${shipping} ${currency}`;
     
     return `
         <div class="cart-summary">
             <div class="summary-row">
                 <span>المجموع الفرعي:</span>
-                <span class="summary-value">${subtotal} ${STORE_CONFIG.currency}</span>
+                <span class="summary-value">${subtotal} ${currency}</span>
             </div>
             <div class="summary-row">
                 <span>التوصيل:</span>
@@ -263,14 +237,14 @@ function createCartFooterHTML() {
             ${freeShippingNotice}
             <div class="summary-row total">
                 <span>الإجمالي:</span>
-                <span class="summary-value">${total} ${STORE_CONFIG.currency}</span>
+                <span class="summary-value">${total} ${currency}</span>
             </div>
         </div>
-        <button class="checkout-btn" onclick="sendWhatsAppOrder()">
+        <button class="checkout-btn" onclick="window.sendWhatsAppOrder()">
             <i class="fab fa-whatsapp"></i>
             إتمام الطلب عبر واتساب
         </button>
-        <button class="clear-cart-btn" onclick="clearCart()">
+        <button class="clear-cart-btn" onclick="window.clearCart()">
             إفراغ السلة
         </button>
         <p class="cart-note">
@@ -281,31 +255,46 @@ function createCartFooterHTML() {
 
 // ==================== WHATSAPP ORDER ====================
 
-/**
- * Send order via WhatsApp
- */
 function sendWhatsAppOrder() {
     if (cart.length === 0) {
-        showNotification('السلة فارغة', 'warning');
+        if (typeof showNotification === 'function') {
+            showNotification('السلة فارغة', 'warning');
+        } else {
+            alert('السلة فارغة');
+        }
         return;
     }
     
     const subtotal = getCartSubtotal();
     const shipping = getShippingCost(subtotal);
     const total = getCartTotal();
+    const currency = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.currency : 'ريال';
+    const storeName = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.storeName : 'جمانة';
+    const whatsapp = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.whatsapp : '966503780023';
     
-    // Format order items
     const orderItems = cart.map(item => {
-        return `• ${item.name}\n  الكمية: ${item.quantity} × ${item.price} ${STORE_CONFIG.currency} = ${item.price * item.quantity} ${STORE_CONFIG.currency}`;
+        return `• ${item.name}\n  الكمية: ${item.quantity} × ${item.price} ${currency} = ${item.price * item.quantity} ${currency}`;
     }).join('\n\n');
     
-    // Create message
     const message = `السلام عليكم ورحمة الله 🌿
 
-أرغب بطلب التالي من متجر ${STORE_CONFIG.storeName}:
+أرغب بطلب التالي من متجر ${storeName}:
 
 ${orderItems}
 
 ━━━━━━━━━━━━━━━━
-المجموع الفرعي: ${subtotal} ${STORE_CONFIG.currency}
-التوصيل: ${shipping === 0 ? 'مجاناً
+المجموع الفرعي: ${subtotal} ${currency}
+التوصيل: ${shipping === 0 ? 'مجاناً ✨' : `${shipping} ${currency}`}
+الإجمالي النهائي: ${total} ${currency}
+━━━━━━━━━━━━━━━━
+
+شكراً لكم ✨`;
+    
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${whatsapp}?text=${encodedMessage}`;
+    
+    console.log('Opening WhatsApp with order:', whatsappUrl);
+    window.open(whatsappUrl, '_blank');
+}
+
+console.log('✅ cart.js loaded successfully');
