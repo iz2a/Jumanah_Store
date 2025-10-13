@@ -1,19 +1,19 @@
 /* ==================== ROOT VARIABLES ==================== */
 :root {
-    /* Colors */
-    --primary-color: #059669;
-    --primary-dark: #047857;
-    --primary-light: #10b981;
-    --secondary-color: #14b8a6;
-    --accent-color: #f59e0b;
+    /* Colors - Warm Greige Theme */
+    --primary-color: #b6aa8e;
+    --primary-dark: #9d9179;
+    --primary-light: #c9bfa8;
+    --secondary-color: #8b8371;
+    --accent-color: #d4c4a8;
     
     --text-primary: #1f2937;
     --text-secondary: #6b7280;
     --text-light: #9ca3af;
     
     --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
-    --bg-accent: #ecfdf5;
+    --bg-secondary: #faf9f7;
+    --bg-accent: #f5f3ef;
     
     --border-color: #e5e7eb;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -69,7 +69,7 @@ body {
     font-size: var(--font-size-base);
     line-height: 1.6;
     color: var(--text-primary);
-    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 50%, #cffafe 100%);
+    background: linear-gradient(135deg, #faf9f7 0%, #f5f3ef 50%, #ebe8e1 100%);
     direction: rtl;
     overflow-x: hidden;
 }
@@ -129,7 +129,7 @@ img {
 .logo-icon {
     width: 48px;
     height: 48px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
     border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
@@ -149,7 +149,7 @@ img {
 .logo-text h1 {
     font-size: var(--font-size-2xl);
     font-weight: 700;
-    color: var(--primary-dark);
+    color: #9d9179;
 }
 
 .logo-text p {
@@ -173,8 +173,8 @@ img {
 }
 
 .nav-desktop a:hover {
-    color: var(--primary-color);
-    background: var(--bg-accent);
+    color: #b6aa8e;
+    background: #f5f3ef;
 }
 
 .nav-mobile {
@@ -199,8 +199,8 @@ img {
 }
 
 .nav-mobile a:hover {
-    background: var(--bg-accent);
-    color: var(--primary-color);
+    background: #f5f3ef;
+    color: #b6aa8e;
 }
 
 /* Header Actions */
@@ -230,7 +230,7 @@ img {
     position: absolute;
     top: -4px;
     right: -4px;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
     color: white;
     width: 24px;
     height: 24px;
@@ -271,7 +271,7 @@ img {
 .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(20, 184, 166, 0.1));
+    background: linear-gradient(135deg, rgba(182, 170, 142, 0.08), rgba(201, 191, 168, 0.08));
     z-index: 0;
 }
 
@@ -296,13 +296,13 @@ img {
 }
 
 .hero-badge i {
-    color: var(--primary-color);
+    color: #b6aa8e;
 }
 
 .hero-badge span {
     font-size: var(--font-size-sm);
     font-weight: 600;
-    color: var(--primary-dark);
+    color: #9d9179;
 }
 
 .hero-title {
@@ -314,7 +314,7 @@ img {
 }
 
 .gradient-text {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -348,14 +348,14 @@ img {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
     color: white;
     box-shadow: var(--shadow-xl);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 20px 40px rgba(5, 150, 105, 0.3);
+    box-shadow: 0 20px 40px rgba(182, 170, 142, 0.3);
 }
 
 .btn-secondary {
@@ -393,12 +393,12 @@ img {
 .badge-icon {
     width: 48px;
     height: 48px;
-    background: var(--bg-accent);
+    background: #f5f3ef;
     border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary-color);
+    color: #b6aa8e;
     font-size: var(--font-size-xl);
 }
 
@@ -478,7 +478,7 @@ img {
 }
 
 .category-btn.active {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
     color: white;
     box-shadow: var(--shadow-xl);
     transform: scale(1.05);
@@ -588,8 +588,8 @@ img {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    background: var(--bg-accent);
-    color: var(--primary-color);
+    background: #f5f3ef;
+    color: #9d9179;
     padding: 4px var(--spacing-sm);
     border-radius: var(--radius-full);
     font-size: var(--font-size-xs);
@@ -671,7 +671,7 @@ img {
 .price-amount {
     font-size: var(--font-size-2xl);
     font-weight: 700;
-    color: var(--primary-color);
+    color: #b6aa8e;
 }
 
 .price-currency {
@@ -690,7 +690,7 @@ img {
     align-items: center;
     gap: var(--spacing-xs);
     padding: var(--spacing-sm) var(--spacing-md);
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(135deg, #b6aa8e, #c9bfa8);
     color: white;
     border-radius: var(--radius-full);
     font-weight: 700;
