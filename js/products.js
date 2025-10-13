@@ -74,7 +74,7 @@ const PRODUCTS = [
             'طعم أصيل زي زمان'
         ],
         ingredients: ['قشر القهوة', 'زنجبيل', 'قرفة', 'هيل', 'قرنفل'],
-        image: 'https://images.unsplash.com/photo-1596040033229-a0b3b9b82473?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/qishr-spices.jpg',
         inStock: true,
         featured: true,
         rating: 4.8
@@ -94,7 +94,7 @@ const PRODUCTS = [
             'ريحتها ولا أحلى'
         ],
         ingredients: ['حبوب بن عربي فاخر'],
-        image: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/premium-coffee.jpg',
         inStock: true,
         featured: true,
         rating: 4.9
@@ -114,7 +114,7 @@ const PRODUCTS = [
             'خلطة مدروسة ومجربة'
         ],
         ingredients: ['بابونج', 'نعناع', 'شمر', 'يانسون', 'كمون'],
-        image: 'https://images.unsplash.com/photo-1558815294-a3e8bb3d8edd?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/digestive-herbs.jpg',
         inStock: true,
         featured: false,
         rating: 4.7
@@ -134,7 +134,7 @@ const PRODUCTS = [
             'كلها طبيعية ١٠٠٪'
         ],
         ingredients: ['حناء', 'سدر', 'إكليل الجبل', 'حلبة', 'أملا'],
-        image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/hair-herbs.jpg',
         inStock: true,
         featured: false,
         rating: 4.6
@@ -154,7 +154,7 @@ const PRODUCTS = [
             'آمنة وطبيعية'
         ],
         ingredients: ['كركم', 'ورد مجفف', 'لافندر', 'بابونج', 'ريحان'],
-        image: 'https://images.unsplash.com/photo-1556228852-80d7e06a6f06?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/skin-herbs.jpg',
         inStock: true,
         featured: false,
         rating: 4.7
@@ -176,7 +176,7 @@ const PRODUCTS = [
             'جودة ممتازة'
         ],
         ingredients: ['قشر البن الفاخر', 'قهوة عال العال', 'بهارات مختارة'],
-        image: 'https://images.unsplash.com/photo-1545665225-b23b99e4d45e?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/bundle-pack.jpg',
         inStock: true,
         featured: true,
         isBundle: true,
@@ -198,7 +198,7 @@ const PRODUCTS = [
             'عرض محدود'
         ],
         ingredients: ['٢ قهوة عال العال', 'قشر بالبهارات', 'هدية مجانية'],
-        image: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/bundle-pack.jpg',
         inStock: true,
         featured: true,
         isBundle: true,
@@ -221,7 +221,7 @@ const PRODUCTS = [
             'توفر عليك الوقت'
         ],
         ingredients: ['كمون', 'كزبرة', 'فلفل أسود', 'قرفة', 'هيل', 'كركم'],
-        image: 'https://images.unsplash.com/photo-1596040033229-a0b3b9b82473?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/mixed-spices.jpg',
         inStock: true,
         featured: false,
         rating: 4.7
@@ -241,7 +241,7 @@ const PRODUCTS = [
             'لون جميل للأكل'
         ],
         ingredients: ['كزبرة', 'كمون', 'فلفل أسود', 'ليمون أسود', 'قرفة', 'هيل'],
-        image: 'https://images.unsplash.com/photo-1596040033229-a0b3b9b82473?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/kabsa-spices.jpg',
         inStock: true,
         featured: true,
         rating: 4.8
@@ -261,7 +261,7 @@ const PRODUCTS = [
             'خلطة مجربة'
         ],
         ingredients: ['كمون', 'كزبرة', 'فلفل أسود', 'كركم', 'بابريكا', 'هيل'],
-        image: 'https://images.unsplash.com/photo-1596040033229-a0b3b9b82473?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/mandi-spices.jpg',
         inStock: true,
         featured: false,
         rating: 4.7
