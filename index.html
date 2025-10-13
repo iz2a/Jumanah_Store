@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="متجر جمانة - منتجات طبيعية أصيلة: قشر، قهوة، أعشاب طبيعية">
+    <meta name="keywords" content="قشر، قهوة، أعشاب طبيعية، منتجات طبيعية، السعودية">
+    <meta name="author" content="Jumanah Store">
+    
+    <title>متجر جمانة - منتجات طبيعية أصيلة</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Tajawal (Arabic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Notification Toast -->
+    <div id="notification" class="notification hidden">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text"></span>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo -->
+                <div class="logo">
+                    <div class="logo-icon">ج</div>
+                    <div class="logo-text">
+                        <h1>جمانة</h1>
+                        <p>منتجات طبيعية أصيلة</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="nav-desktop">
+                    <a href="#home">الرئيسية</a>
+                    <a href="#products">المنتجات</a>
+                    <a href="#about">من نحن</a>
+                    <a href="#contact">تواصل معنا</a>
+                </nav>
+
+                <!-- Cart & Mobile Menu -->
+                <div class="header-actions">
+                    <button class="cart-btn" id="cart-btn" aria-label="عرض السلة">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </button>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <nav class="nav-mobile" id="nav-mobile">
+                <a href="#home" class="nav-link">الرئيسية</a>
+                <a href="#products" class="nav-link">المنتجات</a>
+                <a href="#about" class="nav-link">من نحن</a>
+                <a href="#contact" class="nav-link">تواصل معنا</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-leaf"></i>
+                    <span>منتجات طبيعية 100٪</span>
+                </div>
+                <h2 class="hero-title">
+                    اكتشف عالم
+                    <span class="gradient-text">الطبيعة</span>
+                    الأصيلة
+                </h2>
+                <p class="hero-description">
+                    قشر فاخر، قهوة مميزة، وأعشاب طبيعية مختارة بعناية لصحتك وجمالك
+                </p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn btn-primary">
+                        <i class="fas fa-shopping-bag"></i>
+                        تسوق الآن
+                    </a>
+                    <a href="https://wa.me/966503780023" target="_blank" class="btn btn-secondary">
+                        <i class="fab fa-whatsapp"></i>
+                        اتصل بنا
+                    </a>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="trust-badges">
+                    <div class="badge">
+                        <div class="badge-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <div class="badge-text">
+                            <strong>طبيعي 100٪</strong>
+                            <span>بدون إضافات</span>
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="badge-text">
+                            <strong>جودة مضمونة</strong>
+                            <span>منتجات فاخرة</span>
+                        </div>
+                    </div>
+                    <div class="badge">
+                        <div class="badge-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="badge-text">
+                            <strong>رضا العملاء</strong>
+                            <span>خدمة مميزة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">منتجاتنا المميزة</h3>
+                <p class="section-description">
+                    اختر من بين مجموعة واسعة من المنتجات الطبيعية عالية الجودة
+                </p>
+            </div>
+
+            <!-- Category Filter -->
+            <div class="category-filter" id="category-filter">
+                <!-- Categories will be loaded by JS -->
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be loaded by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">من نحن</h3>
+                <div class="title-divider"></div>
+            </div>
+
+            <div class="about-content">
+                <div class="about-box">
+                    <div class="logo-large">
+                        <div class="logo-icon-large">ج</div>
+                        <div class="logo-text-large">
+                            <h2>جمانة</h2>
+                            <p>منتجات طبيعية أصيلة</p>
+                        </div>
+                    </div>
+                    <p class="about-intro">
+                        متجر <strong>جمانة</strong> متخصص في توفير أجود المنتجات الطبيعية والتراثية الأصيلة.
+                    </p>
+                </div>
+
+                <div class="about-features">
+                    <p class="about-text">
+                        نحن في <strong class="text-primary">جمانة</strong> نؤمن بقوة الطبيعة والتراث الأصيل.
+                        نقدم لكم مجموعة مختارة بعناية من أجود المنتجات الطبيعية التي تجمع بين الأصالة والجودة.
+                    </p>
+
+                    <div class="features-list">
+                        <div class="feature-card feature-green">
+                            <div class="feature-icon">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>منتجات طبيعية</h5>
+                                <p>جميع منتجاتنا طبيعية 100٪ بدون إضافات أو مواد حافظة</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card feature-amber">
+                            <div class="feature-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>جودة عالية</h5>
+                                <p>نختار منتجاتنا بعناية فائقة لضمان أعلى معايير الجودة</p>
+                            </div>
+                        </div>
+
+                        <div class="feature-card feature-rose">
+                            <div class="feature-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h5>خدمة مميزة</h5>
+                                <p>نهتم براحة عملائنا ونسعى لتقديم أفضل تجربة تسوق</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">تواصل معنا</h3>
+                <p class="section-description">
+                    نحن هنا للإجابة على استفساراتك ومساعدتك
+                </p>
+            </div>
+
+            <div class="contact-cards">
+                <a href="https://wa.me/966503780023" target="_blank" class="contact-card whatsapp-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>واتساب</h4>
+                            <p>تواصل معنا مباشرة</p>
+                        </div>
+                    </div>
+                    <div class="contact-number">0503780023</div>
+                </a>
+
+                <a href="https://www.tiktok.com/@jum.za" target="_blank" class="contact-card tiktok-card">
+                    <div class="contact-card-header">
+                        <div class="contact-icon">
+                            <i class="fab fa-tiktok"></i>
+                        </div>
+                        <div class="contact-info">
+                            <h4>تيك توك</h4>
+                            <p>تابعنا على تيك توك</p>
+                        </div>
+                    </div>
+                    <div class="contact-number">@jum.za</div>
+                </a>
+            </div>
+
+            <div class="working-hours">
+                <h4>أوقات العمل</h4>
+                <p>السبت - الخميس: 9:00 ص - 9:00 م</p>
+                <p>الجمعة: 4:00 م - 10:00 م</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="logo-icon-footer">ج</div>
+                    <h3>جمانة</h3>
+                </div>
+
+                <div class="footer-social">
+                    <a href="https://wa.me/966503780023" target="_blank" aria-label="واتساب">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@jum.za" target="_blank" aria-label="تيك توك">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+
+                <p class="footer-tagline">منتجات طبيعية أصيلة</p>
+                <p class="footer-products">قشر فاخر • قهوة مميزة • أعشاب طبيعية</p>
+                <p class="footer-copyright">
+                    © <span id="current-year"></span> جمانة. جميع الحقوق محفوظة
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-overlay" id="cart-overlay"></div>
+        <div class="cart-panel">
+            <!-- Cart Header -->
+            <div class="cart-header">
+                <div class="cart-header-content">
+                    <h3>سلة التسوق</h3>
+                    <button class="cart-close" id="cart-close" aria-label="إغلاق السلة">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <p class="cart-items-count" id="cart-items-count">السلة فارغة</p>
+            </div>
+
+            <!-- Cart Items -->
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be loaded by JS -->
+            </div>
+
+            <!-- Cart Footer -->
+            <div class="cart-footer" id="cart-footer">
+                <!-- Cart summary will be loaded by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/products.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
