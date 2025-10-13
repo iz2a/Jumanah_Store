@@ -232,6 +232,122 @@
     </section>
 
     <!-- Contact Section -->
+    <section id="contact" class="container mx-auto px-4 py-20">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    تواصل معنا
+                </h3>
+                <p class="text-gray-600 text-lg">
+                    نحن هنا للإجابة على استفساراتك ومساعدتك
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <a
+                    href={`https://wa.me/${STORE_CONFIG.whatsapp}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group bg-gradient-to-br from-green-500 to-green-600 text-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                >
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Phone class="w-8 h-8" />
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold">واتساب</h4>
+                            <p class="text-green-100">تواصل معنا مباشرة</p>
+                        </div>
+                    </div>
+                    <p class="text-xl font-mono bg-white/10 backdrop-blur-sm px-4 py-3 rounded-xl text-center">
+                        {STORE_CONFIG.whatsapp}
+                    </p>
+                </a>
+
+                <a
+                    href={`https://www.tiktok.com/${STORE_CONFIG.tiktok}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group bg-gradient-to-br from-gray-900 to-black text-white p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                >
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <MessageCircle class="w-8 h-8" />
+                        </div>
+                        <div>
+                            <h4 class="text-2xl font-bold">تيك توك</h4>
+                            <p class="text-gray-300">تابعنا على تيك توك</p>
+                        </div>
+                    </div>
+                    <p class="text-xl font-mono bg-white/10 backdrop-blur-sm px-4 py-3 rounded-xl text-center">
+                        {STORE_CONFIG.tiktok}
+                    </p>
+                </a>
+            </div>
+
+            <!-- Quick Contact Info -->
+            <div class="mt-12 bg-gradient-to-br from-emerald-50 to-teal-50 p-8 rounded-3xl shadow-lg">
+                <h4 class="text-xl font-bold text-gray-900 mb-4 text-center">
+                    أوقات العمل
+                </h4>
+                <div class="space-y-2 text-center text-gray-700">
+                    <p>السبت - الخميس: 9:00 ص - 9:00 م</p>
+                    <p>الجمعة: 4:00 م - 10:00 م</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods Section -->
+    <section class="payment-section" id="payment">
+        <div class="container">
+            <div class="section-header">
+                <h3 class="section-title">طرق الدفع المتاحة</h3>
+                <p class="section-description">
+                    نوفر لك طرق دفع سهلة وآمنة
+                </p>
+            </div>
+
+            <div class="payment-methods-grid">
+                <!-- Bank Transfer -->
+                <div class="payment-method-card">
+                    <div class="payment-method-icon bank-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h4>حوالة بنكية</h4>
+                    <p>تحويل مباشر وآمن إلى حسابنا البنكي</p>
+                    <span class="payment-badge popular">الأكثر استخداماً</span>
+                </div>
+
+                <!-- STC Pay -->
+                <div class="payment-method-card">
+                    <div class="payment-method-icon stc-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>STC Pay</h4>
+                    <p>دفع فوري عبر تطبيق STC Pay</p>
+                    <span class="payment-badge instant">سريع وآمن</span>
+                </div>
+
+                <!-- Cash on Delivery -->
+                <div class="payment-method-card">
+                    <div class="payment-method-icon cod-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <h4>الدفع عند الاستلام</h4>
+                    <p>ادفع نقداً عند وصول طلبك</p>
+                    <span class="payment-badge available">متاح</span>
+                </div>
+            </div>
+
+            <div class="payment-info-box">
+                <i class="fas fa-info-circle"></i>
+                <p>بعد تأكيد الطلب عبر واتساب، سنرسل لك تفاصيل الدفع المناسبة</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <section class="contact-section" id="contact">
         <div class="container">
             <div class="section-header">
@@ -298,9 +414,22 @@
                 </div>
 
                 <p class="footer-tagline">منتجات طبيعية أصيلة</p>
-                <p class="footer-products">قشر فاخر • قهوة مميزة • أعشاب طبيعية</p>
+                <p class="footer-products">قشر فاخر • قهوة مميزة • أعشاب طبيعية • بهارات</p>
+                
+                <!-- Legal Information -->
+                <div class="footer-legal">
+                    <p class="legal-text">
+                        <i class="fas fa-certificate"></i>
+                        مسجل ضمن برنامج الأسر المنتجة - وزارة الموارد البشرية والتنمية الاجتماعية
+                    </p>
+                    <p class="legal-text">
+                        <i class="fas fa-check-circle"></i>
+                        شهادة عمل حر معتمدة
+                    </p>
+                </div>
+                
                 <p class="footer-copyright">
-                    © <span id="current-year"></span> جمانة. جميع الحقوق محفوظة
+                    © <span id="current-year"></span> متجر جمانة. جميع الحقوق محفوظة
                 </p>
             </div>
         </div>
