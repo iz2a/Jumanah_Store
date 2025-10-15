@@ -311,7 +311,7 @@ const PRODUCTS = [
         nameEn: 'Henna',
         category: 'beauty',
         price: 15,
-        weight: 'الكيد (حوالي 350g)',
+        weight: 'كيس',
         description: 'حناء طبيعية للشعر، تلون وتقوي الشعر وتعطيه لمعة حلوة.',
         benefits: [
             'طبيعية 100%',
@@ -331,7 +331,7 @@ const PRODUCTS = [
         nameEn: 'Colon Mix',
         category: 'herbs',
         price: 25,
-        weight: 'علبة',
+        weight: 'كيس',
         description: 'خلطة أعشاب طبيعية للقولون، تريح المعدة والقولون وتساعد على الهضم.',
         benefits: [
             'تريح القولون',
