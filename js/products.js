@@ -32,28 +32,34 @@ const CATEGORIES = [
         nameEn: 'Spices'
     },
     {
-        id: 'herbs_digestive',
-        name: 'أعشاب الجهاز الهضمي',
-        icon: '🌿',
-        nameEn: 'Digestive Herbs'
+        id: 'incense',
+        name: 'بخور',
+        icon: '🪔',
+        nameEn: 'Incense'
     },
     {
-        id: 'herbs_hair',
-        name: 'أعشاب العناية بالشعر',
-        icon: '💆',
-        nameEn: 'Hair Care Herbs'
-    },
-    {
-        id: 'herbs_skin',
-        name: 'أعشاب العناية بالبشرة',
+        id: 'beauty',
+        name: 'العناية',
         icon: '✨',
-        nameEn: 'Skin Care Herbs'
+        nameEn: 'Beauty & Care'
     },
     {
-        id: 'bundles',
-        name: 'عروض وباقات',
-        icon: '🎁',
-        nameEn: 'Bundles & Offers'
+        id: 'herbs',
+        name: 'أعشاب',
+        icon: '🌿',
+        nameEn: 'Herbs'
+    },
+    {
+        id: 'accessories',
+        name: 'إكسسوارات',
+        icon: '🧺',
+        nameEn: 'Accessories'
+    },
+    {
+        id: 'charcoal',
+        name: 'فحم',
+        icon: '🔥',
+        nameEn: 'Charcoal'
     }
 ];
 
@@ -61,210 +67,303 @@ const CATEGORIES = [
 const PRODUCTS = [
     {
         id: 'prod_001',
-        name: 'قشر مع بهاراته - جاهز وما يحتاج شي',
-        nameEn: 'Qishr with Premium Spices',
+        name: 'القهوة',
+        nameEn: 'Premium Coffee',
         category: 'beverages',
-        price: 45,
-        weight: '250g',
-        description: 'قشر لذيذ مخلوط مع أحلى بهارات، طعمه ولا أروع والريحة تجنن! حطيه على الماي الحار وجاهز',
+        price: 60,
+        weight: '1 كيلو',
+        description: 'قهوة فاخرة من أجود أنواع البن، طعمها ولا أروع والريحة تجنن. حطها على الماي الحار وجاهزة.',
         benefits: [
-            'ريحته حلوة وطعمه عسل',
-            'يشد البدن ويعطيك نشاط',
-            'خلطة مزبوطة ومتوازنة',
-            'طعم أصيل زي زمان'
+            'طعمها يدوخ',
+            'ريحة فواحة',
+            'تشد البدن',
+            'كيلو كامل'
         ],
-        ingredients: ['قشر القهوة', 'زنجبيل', 'قرفة', 'هيل', 'قرنفل'],
-        image: 'images/products/qishr-spices.jpg',
-        inStock: true,
-        featured: true,
-        rating: 4.8
-    },
-    {
-        id: 'prod_002',
-        name: 'قهوة عال العال - محمصة طازة',
-        nameEn: 'Premium Al Alal Coffee',
-        category: 'beverages',
-        price: 65,
-        weight: '250g',
-        description: 'قهوة فاخرة محمصة على أصولها، ريحتها تملا البيت وطعمها يدوخ! من أجود أنواع البن',
-        benefits: [
-            'محمصة طازة',
-            'بن فاخر ١٠٠٪',
-            'طعمها قوي ومضبوط',
-            'ريحتها ولا أحلى'
-        ],
-        ingredients: ['حبوب بن عربي فاخر'],
-        image: 'images/products/premium-coffee.jpg',
+        ingredients: ['بن محمص', 'هيل'],
+        image: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=800&h=600&fit=crop&q=80',
         inStock: true,
         featured: true,
         rating: 4.9
     },
     {
-        id: 'prod_003',
-        name: 'أعشاب للقولون والمعدة',
-        nameEn: 'Natural Herbs for Digestive Health',
-        category: 'herbs_digestive',
-        price: 55,
-        weight: '150g',
-        description: 'خلطة أعشاب طبيعية تريح القولون والمعدة، كلها أعشاب مجربة وآمنة بإذن الله',
+        id: 'prod_002',
+        name: 'القشر',
+        nameEn: 'Qishr',
+        category: 'beverages',
+        price: 40,
+        weight: 'علبة',
+        description: 'قشر أصلي ونظيف، مفيد للجسم وطعمه ولا أحلى. جاهز وما يحتاج شي، حطه على الماي وارتاح.',
         benefits: [
-            'تريح المعدة والقولون',
-            'تهدي البطن',
-            'أعشاب طبيعية ١٠٠٪',
-            'خلطة مدروسة ومجربة'
+            'صحي ومفيد',
+            'يشد البدن',
+            'طعم أصيل',
+            'سهل التحضير'
         ],
-        ingredients: ['بابونج', 'نعناع', 'شمر', 'يانسون', 'كمون'],
-        image: 'images/products/digestive-herbs.jpg',
+        ingredients: ['قشر البن', 'زنجبيل'],
+        image: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop&q=80',
         inStock: true,
-        featured: false,
-        rating: 4.7
+        featured: true,
+        rating: 4.8
     },
     {
-        id: 'prod_004',
-        name: 'أعشاب تقوية الشعر وتكثيفه',
-        nameEn: 'Natural Hair Strengthening Herbs',
-        category: 'herbs_hair',
-        price: 50,
-        weight: '150g',
-        description: 'خلطة أعشاب للشعر تقويه وتكثفه وتوقف التساقط بإذن الله، مجربة وفعالة',
+        id: 'prod_003',
+        name: 'البهارات',
+        nameEn: 'Spice Mix',
+        category: 'spices',
+        price: 10,
+        weight: 'علبة',
+        description: 'خلطة بهارات متنوعة تضبط كل الأكلات، ريحتها حلوة وتعطي نكهة مميزة.',
         benefits: [
-            'تقوي الشعر من الجذور',
-            'تساعد على النمو',
-            'توقف التساقط',
-            'كلها طبيعية ١٠٠٪'
+            'تضبط الطبخات',
+            'خلطة مزبوطة',
+            'ريحة قوية',
+            'سعر ممتاز'
         ],
-        ingredients: ['حناء', 'سدر', 'إكليل الجبل', 'حلبة', 'أملا'],
-        image: 'images/products/hair-herbs.jpg',
+        ingredients: ['كمون', 'كزبرة', 'فلفل أسود', 'كركم', 'قرفة'],
+        image: 'https://images.unsplash.com/photo-1596040033229-a0b3b9b82473?w=800&h=600&fit=crop&q=80',
         inStock: true,
         featured: false,
         rating: 4.6
     },
     {
-        id: 'prod_005',
-        name: 'أعشاب للبشرة والنضارة',
-        nameEn: 'Natural Skin Radiance Herbs',
-        category: 'herbs_skin',
-        price: 50,
-        weight: '150g',
-        description: 'أعشاب طبيعية تنظف البشرة وتعطيها نضارة وإشراقة، بدون أي كيماويات',
+        id: 'prod_004',
+        name: 'البخور الدوسري الملكي - درجة أولى',
+        nameEn: 'Royal Dosari Incense - First Grade',
+        category: 'incense',
+        price: 60,
+        weight: 'علبة',
+        description: 'بخور دوسري ملكي من أفخر الأنواع، ريحته تعطر المكان وتعطي جو راقي.',
         benefits: [
-            'تنظف البشرة',
-            'تعطي نضارة طبيعية',
-            'مفيدة للبشرة',
-            'آمنة وطبيعية'
+            'درجة أولى فاخرة',
+            'ريحة تدوم',
+            'يعطر المكان',
+            'مناسب للمناسبات'
         ],
-        ingredients: ['كركم', 'ورد مجفف', 'لافندر', 'بابونج', 'ريحان'],
-        image: 'images/products/skin-herbs.jpg',
+        ingredients: ['عود دوسري', 'عنبر', 'مسك'],
+        image: 'https://images.unsplash.com/photo-1608814170972-1011d76c215b?w=800&h=600&fit=crop&q=80',
+        inStock: true,
+        featured: true,
+        rating: 5.0
+    },
+    {
+        id: 'prod_005',
+        name: 'بخور مخلط',
+        nameEn: 'Mixed Incense',
+        category: 'incense',
+        price: 25,
+        weight: 'علبة',
+        description: 'بخور مخلط بريحة حلوة ومناسبة، يعطر البيت ويعطي جو لطيف.',
+        benefits: [
+            'ريحة منعشة',
+            'سعر مناسب',
+            'خلطة متنوعة',
+            'يناسب الاستخدام اليومي'
+        ],
+        ingredients: ['عود', 'عنبر', 'مسك', 'ورد'],
+        image: 'https://images.unsplash.com/photo-1610374259048-1e7c8b90ca1d?w=800&h=600&fit=crop&q=80',
         inStock: true,
         featured: false,
-        rating: 4.7
+        rating: 4.5
     },
     {
         id: 'prod_006',
-        name: 'باقة القشر والقهوة - عرض خاص',
-        nameEn: 'Premium Qishr & Coffee Bundle',
-        category: 'bundles',
-        price: 95,
-        originalPrice: 110,
-        discount: 15,
-        weight: '500g',
-        description: 'باقة حلوة فيها القشر والقهوة مع بعض، هدية مثالية وسعرها حلو! توفر معانا ١٥ ريال',
+        name: 'السدر - للشعر والبشرة',
+        nameEn: 'Sidr Powder',
+        category: 'beauty',
+        price: 35,
+        weight: 'علبة',
+        description: 'سدر طبيعي للشعر والبشرة، ينظف ويغذي ويقوي الشعر ويصفي البشرة.',
         benefits: [
-            'توفير ١٥ ريال',
-            'هدية روعة',
-            'نوعين بسعر واحد',
-            'جودة ممتازة'
+            'ينظف الشعر طبيعي',
+            'يقوي الشعر',
+            'ينقي البشرة',
+            'طبيعي 100%'
         ],
-        ingredients: ['قشر البن الفاخر', 'قهوة عال العال', 'بهارات مختارة'],
-        image: 'images/products/bundle-pack.jpg',
+        ingredients: ['سدر مطحون'],
+        image: 'https://images.unsplash.com/photo-1556228852-80d7e06a6f06?w=800&h=600&fit=crop&q=80',
         inStock: true,
-        featured: true,
-        isBundle: true,
-        rating: 4.9
-    },
-    {
-        id: 'prod_010',
-        name: 'عرض خاص: ٢ قهوة + قشر = هدية مجانية!',
-        nameEn: '2 Coffee + Qishr Special Offer',
-        category: 'bundles',
-        price: 175,
-        originalPrice: 175,
-        weight: '750g',
-        description: 'اشتري ٢ قهوة وقشر واحصلي على هدية من اختيارك (فحم أو بخور) مجاناً! عرض لفترة محدودة',
-        benefits: [
-            'هدية مجانية من اختيارك',
-            'فحم أو بخور (أنتي اختاري)',
-            'وفر على المشتريات',
-            'عرض محدود'
-        ],
-        ingredients: ['٢ قهوة عال العال', 'قشر بالبهارات', 'هدية مجانية'],
-        image: 'images/products/bundle-pack.jpg',
-        inStock: true,
-        featured: true,
-        isBundle: true,
-        specialOffer: true,
-        giftOptions: ['فحم', 'بخور'],
-        rating: 4.9
+        featured: false,
+        rating: 4.7
     },
     {
         id: 'prod_007',
-        name: 'بهارات مشكلة - خلطة البيت',
-        nameEn: 'Mixed Spices Blend',
-        category: 'spices',
-        price: 35,
-        weight: '200g',
-        description: 'بهارات مشكلة لذيذة للطبخ، كل شي فيها وجاهزة، تضبط أي أكلة!',
+        name: 'السلات - صغيرة',
+        nameEn: 'Small Basket',
+        category: 'accessories',
+        price: 10,
+        weight: 'قطعة',
+        description: 'سلات صغيرة حلوة للتنظيم والترتيب، عملية وشكلها أنيق.',
         benefits: [
-            'خلطة كاملة ومتنوعة',
-            'تضبط الطبخات',
-            'نكهة قوية',
-            'توفر عليك الوقت'
+            'عملية للتخزين',
+            'حجم مناسب',
+            'متينة',
+            'سعر ممتاز'
         ],
-        ingredients: ['كمون', 'كزبرة', 'فلفل أسود', 'قرفة', 'هيل', 'كركم'],
-        image: 'images/products/mixed-spices.jpg',
+        ingredients: [],
+        image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&h=600&fit=crop&q=80',
         inStock: true,
         featured: false,
-        rating: 4.7
+        rating: 4.4
     },
     {
         id: 'prod_008',
-        name: 'بهارات الكبسة - نكهة أصيلة',
-        nameEn: 'Kabsa Spice Mix',
-        category: 'spices',
-        price: 40,
-        weight: '200g',
-        description: 'بهارات كبسة خاصة، ريحتها فواحة وطعمها ولا أروع، تخلي الكبسة لذيذة',
+        name: 'السلات - متوسطة',
+        nameEn: 'Medium Basket',
+        category: 'accessories',
+        price: 15,
+        weight: 'قطعة',
+        description: 'سلات متوسطة الحجم، تسع أكثر ومفيدة للترتيب والتنظيم.',
         benefits: [
-            'نكهة الكبسة الأصلية',
-            'ريحة فواحة',
-            'خلطة مزبوطة',
-            'لون جميل للأكل'
+            'حجم عملي',
+            'تسع أكثر',
+            'متينة',
+            'شكلها حلو'
         ],
-        ingredients: ['كزبرة', 'كمون', 'فلفل أسود', 'ليمون أسود', 'قرفة', 'هيل'],
-        image: 'images/products/kabsa-spices.jpg',
+        ingredients: [],
+        image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&h=600&fit=crop&q=80',
         inStock: true,
-        featured: true,
-        rating: 4.8
+        featured: false,
+        rating: 4.5
     },
     {
         id: 'prod_009',
-        name: 'بهارات المندي - طعم ولا أحلى',
-        nameEn: 'Mandi Spice Mix',
-        category: 'spices',
-        price: 40,
-        weight: '200g',
-        description: 'بهارات مندي لذيذة تعطي نكهة مميزة للحم والدجاج، جربها وما راح تندم',
+        name: 'السلات - كبيرة',
+        nameEn: 'Large Basket',
+        category: 'accessories',
+        price: 20,
+        weight: 'قطعة',
+        description: 'سلات كبيرة مناسبة للأغراض الكثيرة، عملية جداً وقوية.',
         benefits: [
-            'نكهة مندي أصلية',
-            'تناسب اللحم والدجاج',
-            'طعمها رهيب',
-            'خلطة مجربة'
+            'حجم كبير',
+            'عملية للأغراض الكثيرة',
+            'متينة',
+            'جودة عالية'
         ],
-        ingredients: ['كمون', 'كزبرة', 'فلفل أسود', 'كركم', 'بابريكا', 'هيل'],
-        image: 'images/products/mandi-spices.jpg',
+        ingredients: [],
+        image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&h=600&fit=crop&q=80',
         inStock: true,
         featured: false,
-        rating: 4.7
+        rating: 4.6
+    },
+    {
+        id: 'prod_010',
+        name: 'المناشف',
+        nameEn: 'Towels',
+        category: 'accessories',
+        price: 10,
+        weight: 'قطعة',
+        description: 'مناشف ناعمة ونظيفة، تمتص الماي زين وسعرها حلو.',
+        benefits: [
+            'ناعمة',
+            'تمتص زين',
+            'نظيفة',
+            'سعر مناسب'
+        ],
+        ingredients: [],
+        image: 'https://images.unsplash.com/photo-1622196276330-090f40da56ab?w=800&h=600&fit=crop&q=80',
+        inStock: true,
+        featured: false,
+        rating: 4.3
+    },
+    {
+        id: 'prod_011',
+        name: 'الوقايا',
+        nameEn: 'Protectors',
+        category: 'accessories',
+        price: 10,
+        weight: 'قطعة',
+        description: 'وقايا عملية وسعرها حلو، تحمي وتحافظ على النظافة.',
+        benefits: [
+            'عملية',
+            'تحافظ على النظافة',
+            'سهلة الاستخدام',
+            'سعر ممتاز'
+        ],
+        ingredients: [],
+        image: 'https://images.unsplash.com/photo-1584302179602-e4c3d3fd629d?w=800&h=600&fit=crop&q=80',
+        inStock: true,
+        featured: false,
+        rating: 4.2
+    },
+    {
+        id: 'prod_012',
+        name: 'الفحم الملون',
+        nameEn: 'Colored Charcoal',
+        category: 'charcoal',
+        price: 10,
+        weight: 'علبة',
+        description: 'فحم ملون للبخور، يشتعل بسرعة وألوانه حلوة تعطي جو مميز.',
+        benefits: [
+            'ألوان جميلة',
+            'يشتعل بسرعة',
+            'مناسب للبخور',
+            'سعر ممتاز'
+        ],
+        ingredients: [],
+        image: 'https://images.unsplash.com/photo-1525904097878-94fb15835963?w=800&h=600&fit=crop&q=80',
+        inStock: true,
+        featured: false,
+        rating: 4.4
+    },
+    {
+        id: 'prod_013',
+        name: 'الفحم سريع الاشتعال',
+        nameEn: 'Quick-Light Charcoal',
+        category: 'charcoal',
+        price: 10,
+        weight: 'علبة',
+        description: 'فحم سريع الاشتعال، ما يحتاج وقت ويشتغل مباشرة، عملي للبخور.',
+        benefits: [
+            'يشتعل بسرعة',
+            'عملي جداً',
+            'ما يحتاج وقت',
+            'مناسب للاستخدام اليومي'
+        ],
+        ingredients: [],
+        image: 'https://images.unsplash.com/photo-1571695431715-4a7e2e0c4b7c?w=800&h=600&fit=crop&q=80',
+        inStock: true,
+        featured: false,
+        rating: 4.5
+    },
+    {
+        id: 'prod_014',
+        name: 'الحناء',
+        nameEn: 'Henna',
+        category: 'beauty',
+        price: 15,
+        weight: 'الكيد (حوالي 350g)',
+        description: 'حناء طبيعية للشعر، تلون وتقوي الشعر وتعطيه لمعة حلوة.',
+        benefits: [
+            'طبيعية 100%',
+            'تقوي الشعر',
+            'تعطي لون جميل',
+            'آمنة للاستخدام'
+        ],
+        ingredients: ['حناء مطحونة'],
+        image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&h=600&fit=crop&q=80',
+        inStock: true,
+        featured: false,
+        rating: 4.6
+    },
+    {
+        id: 'prod_015',
+        name: 'خلطة القولون',
+        nameEn: 'Colon Mix',
+        category: 'herbs',
+        price: 25,
+        weight: 'علبة',
+        description: 'خلطة أعشاب طبيعية للقولون، تريح المعدة والقولون وتساعد على الهضم.',
+        benefits: [
+            'تريح القولون',
+            'تساعد الهضم',
+            'طبيعية 100%',
+            'مجربة ومضمونة'
+        ],
+        ingredients: ['كمون', 'شمر', 'ينسون', 'نعناع'],
+        image: 'https://images.unsplash.com/photo-1571193816567-85a26ee13863?w=800&h=600&fit=crop&q=80',
+        inStock: true,
+        featured: true,
+        rating: 4.8
     }
 ];
 
@@ -374,3 +473,5 @@ if (typeof module !== 'undefined' && module.exports) {
         calculateDiscount
     };
 }
+
+console.log('✅ products.js loaded successfully');
