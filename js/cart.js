@@ -91,14 +91,15 @@ function getCartSubtotal() {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 }
 
-function getShippingCost(subtotal) {
+function getShippingCost() {
+    // Fixed shipping cost - no free shipping
     if (typeof STORE_CONFIG === 'undefined') return 15;
-    return subtotal >= STORE_CONFIG.freeShippingThreshold ? 0 : STORE_CONFIG.shippingCost;
+    return STORE_CONFIG.shippingCost;
 }
 
 function getCartTotal() {
     const subtotal = getCartSubtotal();
-    const shipping = getShippingCost(subtotal);
+    const shipping = getShippingCost();
     return subtotal + shipping;
 }
 
@@ -119,10 +120,10 @@ function updateCartDisplay() {
 function updateCartBadge() {
     const cartCount = document.getElementById('cart-count');
     if (!cartCount) return;
-    
+
     const itemsCount = getCartItemsCount();
     cartCount.textContent = itemsCount;
-    
+
     if (itemsCount > 0) {
         cartCount.style.display = 'flex';
     } else {
@@ -134,11 +135,11 @@ function updateCartSidebar() {
     const cartItemsCount = document.getElementById('cart-items-count');
     const cartItems = document.getElementById('cart-items');
     const cartFooter = document.getElementById('cart-footer');
-    
+
     if (!cartItemsCount || !cartItems || !cartFooter) return;
-    
+
     const itemsCount = getCartItemsCount();
-    
+
     if (itemsCount === 0) {
         cartItemsCount.textContent = 'السلة فارغة';
     } else if (itemsCount === 1) {
@@ -150,7 +151,7 @@ function updateCartSidebar() {
     } else {
         cartItemsCount.textContent = `${itemsCount} منتج`;
     }
-    
+
     if (cart.length === 0) {
         cartItems.innerHTML = `
             <div class="cart-empty">
@@ -174,7 +175,7 @@ function updateCartSidebar() {
 function createCartItemHTML(item) {
     const subtotal = item.price * item.quantity;
     const currency = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.currency : 'ريال';
-    
+
     return `
         <div class="cart-item">
             <div class="cart-item-header">
@@ -208,33 +209,29 @@ function createCartItemHTML(item) {
 
 function createCartFooterHTML() {
     const subtotal = getCartSubtotal();
-    const shipping = getShippingCost(subtotal);
+    const shipping = getShippingCost();
     const total = getCartTotal();
     const currency = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.currency : 'ريال';
-    const freeShippingThreshold = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.freeShippingThreshold : 100;
-    
-    const freeShippingNotice = subtotal > 0 && subtotal < freeShippingThreshold ? `
-        <p class="free-shipping-notice">
-            <i class="fas fa-info-circle"></i>
-            أضف ${freeShippingThreshold - subtotal} ${currency} للحصول على توصيل مجاني
-        </p>
-    ` : '';
-    
-    const shippingText = shipping === 0 ? 
-        '<span style="color: #059669; font-weight: 700;">مجاناً</span>' : 
-        `${shipping} ${currency}`;
-    
+
+    // Shipping info with Red Box branding
+    const shippingInfo = `
+        <div style="background: linear-gradient(135deg, #dc2626, #ef4444); color: white; padding: 8px 12px; border-radius: 8px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; font-size: 0.875rem;">
+            <i class="fas fa-truck" style="font-size: 1.25rem;"></i>
+            <div style="flex: 1;">
+                <div style="font-weight: 700; margin-bottom: 2px;">الشحن عبر Red Box</div>
+                <div style="font-size: 0.75rem; opacity: 0.9;">التوصيل خلال 2-3 أيام</div>
+            </div>
+            <div style="font-weight: 700; font-size: 1.125rem;">${shipping} ${currency}</div>
+        </div>
+    `;
+
     return `
         <div class="cart-summary">
             <div class="summary-row">
                 <span>المجموع الفرعي:</span>
                 <span class="summary-value">${subtotal} ${currency}</span>
             </div>
-            <div class="summary-row">
-                <span>التوصيل:</span>
-                <span class="summary-value">${shippingText}</span>
-            </div>
-            ${freeShippingNotice}
+            ${shippingInfo}
             <div class="summary-row total">
                 <span>الإجمالي:</span>
                 <span class="summary-value">${total} ${currency}</span>
@@ -264,18 +261,18 @@ function sendWhatsAppOrder() {
         }
         return;
     }
-    
+
     const subtotal = getCartSubtotal();
-    const shipping = getShippingCost(subtotal);
+    const shipping = getShippingCost();
     const total = getCartTotal();
     const currency = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.currency : 'ريال';
     const storeName = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.storeName : 'جمانة';
     const whatsapp = typeof STORE_CONFIG !== 'undefined' ? STORE_CONFIG.whatsapp : '966503780023';
-    
+
     const orderItems = cart.map(item => {
         return `• ${item.name}\n  الكمية: ${item.quantity} × ${item.price} ${currency} = ${item.price * item.quantity} ${currency}`;
     }).join('\n\n');
-    
+
     const message = `السلام عليكم ورحمة الله 🌿
 
 أرغب بطلب التالي من متجر ${storeName}:
@@ -284,15 +281,15 @@ ${orderItems}
 
 ━━━━━━━━━━━━━━━━
 المجموع الفرعي: ${subtotal} ${currency}
-التوصيل: ${shipping === 0 ? 'مجاناً ✨' : `${shipping} ${currency}`}
+الشحن (Red Box): ${shipping} ${currency}
 الإجمالي النهائي: ${total} ${currency}
 ━━━━━━━━━━━━━━━━
 
 شكراً لكم ✨`;
-    
+
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${whatsapp}?text=${encodedMessage}`;
-    
+
     console.log('Opening WhatsApp with order:', whatsappUrl);
     window.open(whatsappUrl, '_blank');
 }

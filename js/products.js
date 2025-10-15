@@ -7,8 +7,8 @@ const STORE_CONFIG = {
     tiktok: '@jum.za',
     currency: 'ريال',
     locale: 'ar-SA',
-    freeShippingThreshold: 100,
-    shippingCost: 15
+    shippingCost: 15,
+    shippingMethod: 'redbox' // Red Box delivery
 };
 
 // ==================== CATEGORIES DATA ====================
