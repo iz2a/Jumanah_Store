@@ -83,7 +83,7 @@ const PRODUCTS = [
         image: 'images/products/coffee.png',
         inStock: true,
         featured: true,
-        rating: 4.9
+        rating: 5
     },
     {
         id: 'prod_002',
@@ -103,7 +103,7 @@ const PRODUCTS = [
         image: 'images/products/qishr.png',
         inStock: true,
         featured: true,
-        rating: 4.8
+        rating: 5
     },
     {
         id: 'prod_003',
@@ -123,7 +123,7 @@ const PRODUCTS = [
         image: 'images/products/spices.png',
         inStock: true,
         featured: false,
-        rating: 4.6
+        rating: 5
     },
     {
         id: 'prod_004',
@@ -163,7 +163,7 @@ const PRODUCTS = [
         image: 'images/products/mix_b.png',
         inStock: true,
         featured: false,
-        rating: 4.5
+        rating: 4.8
     },
     {
         id: 'prod_006',
@@ -183,7 +183,7 @@ const PRODUCTS = [
         image: 'images/products/sdr.png',
         inStock: true,
         featured: false,
-        rating: 4.7
+        rating: 4.9
     },
     {
         id: 'prod_007',
@@ -203,7 +203,7 @@ const PRODUCTS = [
         image: 'images/products/cart.png',
         inStock: true,
         featured: false,
-        rating: 4.4
+        rating: 4.7
     },
     {
         id: 'prod_008',
@@ -223,7 +223,7 @@ const PRODUCTS = [
         image: 'images/products/cart.png',
         inStock: true,
         featured: false,
-        rating: 4.5
+        rating: 4.7
     },
     {
         id: 'prod_009',
@@ -243,7 +243,7 @@ const PRODUCTS = [
         image: 'images/products/cart.png',
         inStock: true,
         featured: false,
-        rating: 4.6
+        rating: 4.7
     },
     {
         id: 'prod_010',
@@ -263,7 +263,7 @@ const PRODUCTS = [
         image: 'images/products/towels.png',
         inStock: true,
         featured: false,
-        rating: 4.3
+        rating: 4.8
     },
     {
         id: 'prod_011',
@@ -283,7 +283,7 @@ const PRODUCTS = [
         image: 'images/products/glove.png',
         inStock: true,
         featured: false,
-        rating: 4.2
+        rating: 4.8
     },
     {
         id: 'prod_013',
@@ -303,7 +303,7 @@ const PRODUCTS = [
         image: 'images/products/coals.png',
         inStock: true,
         featured: false,
-        rating: 4.5
+        rating: 5
     },
     {
         id: 'prod_014',
@@ -323,7 +323,7 @@ const PRODUCTS = [
         image: 'images/products/hina.png',
         inStock: true,
         featured: false,
-        rating: 4.6
+        rating: 5
     },
     {
         id: 'prod_015',
@@ -343,7 +343,7 @@ const PRODUCTS = [
         image: 'images/products/mix.png',
         inStock: true,
         featured: true,
-        rating: 4.8
+        rating: 5
     }
 ];
 
