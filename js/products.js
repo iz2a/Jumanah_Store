@@ -67,7 +67,7 @@ const CATEGORIES = [
 const PRODUCTS = [
     {
         id: 'prod_001',
-        name: 'القهوة',
+        name: 'قهوة',
         nameEn: 'Premium Coffee',
         category: 'beverages',
         price: 60,
@@ -80,14 +80,14 @@ const PRODUCTS = [
             'كيلو كامل'
         ],
         ingredients: ['بن محمص', 'هيل'],
-        image: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/coffee.png',
         inStock: true,
         featured: true,
         rating: 4.9
     },
     {
         id: 'prod_002',
-        name: 'القشر',
+        name: 'قشر',
         nameEn: 'Qishr',
         category: 'beverages',
         price: 40,
@@ -100,7 +100,7 @@ const PRODUCTS = [
             'سهل التحضير'
         ],
         ingredients: ['قشر البن', 'زنجبيل'],
-        image: 'https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/qishr.png',
         inStock: true,
         featured: true,
         rating: 4.8
@@ -120,7 +120,7 @@ const PRODUCTS = [
             'سعر ممتاز'
         ],
         ingredients: ['كمون', 'كزبرة', 'فلفل أسود', 'كركم', 'قرفة'],
-        image: 'https://images.unsplash.com/photo-1596040033229-a0b3b9b82473?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/spices.png',
         inStock: true,
         featured: false,
         rating: 4.6
@@ -140,7 +140,7 @@ const PRODUCTS = [
             'مناسب للمناسبات'
         ],
         ingredients: ['عود دوسري', 'عنبر', 'مسك'],
-        image: 'https://images.unsplash.com/photo-1608814170972-1011d76c215b?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/bokhor.png',
         inStock: true,
         featured: true,
         rating: 5.0
@@ -160,14 +160,14 @@ const PRODUCTS = [
             'يناسب الاستخدام اليومي'
         ],
         ingredients: ['عود', 'عنبر', 'مسك', 'ورد'],
-        image: 'https://images.unsplash.com/photo-1610374259048-1e7c8b90ca1d?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/mix_b.png',
         inStock: true,
         featured: false,
         rating: 4.5
     },
     {
         id: 'prod_006',
-        name: 'السدر - للشعر والبشرة',
+        name: 'سدر - للشعر والبشرة',
         nameEn: 'Sidr Powder',
         category: 'beauty',
         price: 35,
@@ -180,14 +180,14 @@ const PRODUCTS = [
             'طبيعي 100%'
         ],
         ingredients: ['سدر مطحون'],
-        image: 'https://images.unsplash.com/photo-1556228852-80d7e06a6f06?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/sdr.png',
         inStock: true,
         featured: false,
         rating: 4.7
     },
     {
         id: 'prod_007',
-        name: 'السلات - صغيرة',
+        name: 'سلات - صغيرة',
         nameEn: 'Small Basket',
         category: 'accessories',
         price: 10,
@@ -200,14 +200,14 @@ const PRODUCTS = [
             'سعر ممتاز'
         ],
         ingredients: [],
-        image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/cart.png',
         inStock: true,
         featured: false,
         rating: 4.4
     },
     {
         id: 'prod_008',
-        name: 'السلات - متوسطة',
+        name: 'سلات - متوسطة',
         nameEn: 'Medium Basket',
         category: 'accessories',
         price: 15,
@@ -220,14 +220,14 @@ const PRODUCTS = [
             'شكلها حلو'
         ],
         ingredients: [],
-        image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/cart.png',
         inStock: true,
         featured: false,
         rating: 4.5
     },
     {
         id: 'prod_009',
-        name: 'السلات - كبيرة',
+        name: 'سلات - كبيرة',
         nameEn: 'Large Basket',
         category: 'accessories',
         price: 20,
@@ -240,14 +240,14 @@ const PRODUCTS = [
             'جودة عالية'
         ],
         ingredients: [],
-        image: 'https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/cart.png',
         inStock: true,
         featured: false,
         rating: 4.6
     },
     {
         id: 'prod_010',
-        name: 'المناشف',
+        name: 'مناشف',
         nameEn: 'Towels',
         category: 'accessories',
         price: 10,
@@ -260,14 +260,14 @@ const PRODUCTS = [
             'سعر مناسب'
         ],
         ingredients: [],
-        image: 'https://images.unsplash.com/photo-1622196276330-090f40da56ab?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/towels.png',
         inStock: true,
         featured: false,
         rating: 4.3
     },
     {
         id: 'prod_011',
-        name: 'الوقايا',
+        name: 'وقايا',
         nameEn: 'Protectors',
         category: 'accessories',
         price: 10,
@@ -280,34 +280,14 @@ const PRODUCTS = [
             'سعر ممتاز'
         ],
         ingredients: [],
-        image: 'https://images.unsplash.com/photo-1584302179602-e4c3d3fd629d?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/glove.png',
         inStock: true,
         featured: false,
         rating: 4.2
     },
     {
-        id: 'prod_012',
-        name: 'الفحم الملون',
-        nameEn: 'Colored Charcoal',
-        category: 'charcoal',
-        price: 10,
-        weight: 'علبة',
-        description: 'فحم ملون للبخور، يشتعل بسرعة وألوانه حلوة تعطي جو مميز.',
-        benefits: [
-            'ألوان جميلة',
-            'يشتعل بسرعة',
-            'مناسب للبخور',
-            'سعر ممتاز'
-        ],
-        ingredients: [],
-        image: 'https://images.unsplash.com/photo-1525904097878-94fb15835963?w=800&h=600&fit=crop&q=80',
-        inStock: true,
-        featured: false,
-        rating: 4.4
-    },
-    {
         id: 'prod_013',
-        name: 'الفحم سريع الاشتعال',
+        name: 'فحم سريع الاشتعال',
         nameEn: 'Quick-Light Charcoal',
         category: 'charcoal',
         price: 10,
@@ -320,14 +300,14 @@ const PRODUCTS = [
             'مناسب للاستخدام اليومي'
         ],
         ingredients: [],
-        image: 'https://images.unsplash.com/photo-1571695431715-4a7e2e0c4b7c?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/coals.png',
         inStock: true,
         featured: false,
         rating: 4.5
     },
     {
         id: 'prod_014',
-        name: 'الحناء',
+        name: 'حناء',
         nameEn: 'Henna',
         category: 'beauty',
         price: 15,
@@ -340,7 +320,7 @@ const PRODUCTS = [
             'آمنة للاستخدام'
         ],
         ingredients: ['حناء مطحونة'],
-        image: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/hina.png',
         inStock: true,
         featured: false,
         rating: 4.6
@@ -360,7 +340,7 @@ const PRODUCTS = [
             'مجربة ومضمونة'
         ],
         ingredients: ['كمون', 'شمر', 'ينسون', 'نعناع'],
-        image: 'https://images.unsplash.com/photo-1571193816567-85a26ee13863?w=800&h=600&fit=crop&q=80',
+        image: 'images/products/mix.png',
         inStock: true,
         featured: true,
         rating: 4.8
