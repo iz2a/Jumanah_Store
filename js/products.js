@@ -7,7 +7,7 @@ const STORE_CONFIG = {
     tiktok: '@jum.za',
     currency: 'ريال',
     locale: 'ar-SA',
-    shippingCost: 15,
+    shippingCost: 20,
     shippingMethod: 'redbox' // Red Box delivery
 };
 
