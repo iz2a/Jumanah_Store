@@ -286,6 +286,26 @@ const PRODUCTS = [
         rating: 4.8
     },
     {
+        id: 'prod_012',
+        name: 'فحم الملون',
+        nameEn: 'Colored Charcoal',
+        category: 'charcoal',
+        price: 10,
+        weight: 'علبة',
+        description: 'فحم ملون للبخور، يشتعل بسرعة وألوانه حلوة تعطي جو مميز.',
+        benefits: [
+            'ألوان جميلة',
+            'يشتعل بسرعة',
+            'مناسب للبخور',
+            'سعر ممتاز'
+        ],
+        ingredients: [],
+        image: 'images/products/coals2.png',
+        inStock: true,
+        featured: false,
+        rating: 4.7
+    },
+    {
         id: 'prod_013',
         name: 'فحم سريع الاشتعال',
         nameEn: 'Quick-Light Charcoal',
