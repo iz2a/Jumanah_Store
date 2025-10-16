@@ -93,7 +93,7 @@ function getCartSubtotal() {
 
 function getShippingCost() {
     // Fixed shipping cost - no free shipping
-    if (typeof STORE_CONFIG === 'undefined') return 15;
+    if (typeof STORE_CONFIG === 'undefined') return 20;
     return STORE_CONFIG.shippingCost;
 }
 
