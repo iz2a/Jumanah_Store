@@ -287,7 +287,7 @@ const PRODUCTS = [
     },
     {
         id: 'prod_012',
-        name: 'فحم الملون',
+        name: 'فحم ملون',
         nameEn: 'Colored Charcoal',
         category: 'charcoal',
         price: 10,
