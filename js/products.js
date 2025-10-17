@@ -80,7 +80,7 @@ const PRODUCTS = [
             'كيلو كامل'
         ],
         ingredients: ['بن محمص', 'هيل'],
-        image: 'images/products/coffee.png',
+        image: 'images/products/Coffee1.png',
         inStock: true,
         featured: true,
         rating: 5
@@ -100,7 +100,7 @@ const PRODUCTS = [
             'سهل التحضير'
         ],
         ingredients: ['قشر البن', 'زنجبيل'],
-        image: 'images/products/qishr.png',
+        image: 'images/products/qishr1.png',
         inStock: true,
         featured: true,
         rating: 5
