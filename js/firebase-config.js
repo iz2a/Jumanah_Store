@@ -1,5 +1,7 @@
 // ==================== FIREBASE CONFIGURATION ====================
 
+console.log('🔥 Loading Firebase Configuration...');
+
 // Import Firebase modules from CDN
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
 import { 
@@ -23,11 +25,16 @@ const firebaseConfig = {
   appId: "1:742919394601:web:20008ab693a465a5fc1338"
 };
 
+console.log('⚙️ Initializing Firebase with config:', firebaseConfig.projectId);
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore
 const db = getFirestore(app);
+
+console.log('✅ Firebase App initialized');
+console.log('✅ Firestore initialized');
 
 // Export for use in other files
 window.firebaseDb = db;
@@ -39,5 +46,18 @@ window.firebaseWhere = where;
 window.firebaseOrderBy = orderBy;
 window.firebaseServerTimestamp = serverTimestamp;
 
-console.log('✅ Firebase initialized successfully');
-console.log('Firebase DB:', db);
+console.log('✅ Firebase functions exported to window object');
+console.log('🔥 Firebase ready for use!');
+
+// Test Firebase connection
+setTimeout(async () => {
+    try {
+        console.log('🧪 Testing Firebase connection...');
+        const testCollection = collection(db, 'reviews');
+        const testQuery = query(testCollection, where('productId', '==', 'test'));
+        await getDocs(testQuery);
+        console.log('✅ Firebase connection test successful!');
+    } catch (error) {
+        console.error('❌ Firebase connection test failed:', error);
+    }
+}, 1000);
