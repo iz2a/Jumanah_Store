@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-function initializeApp() {
+async function initializeApp() {
     // Set current year in footer
     document.getElementById('current-year').textContent = new Date().getFullYear();
     
@@ -16,7 +16,7 @@ function initializeApp() {
     loadCategories();
     
     // Load products
-    loadProducts(currentCategory);
+    await loadProducts(currentCategory);
     
     // Initialize cart
     loadCartFromStorage();
@@ -122,9 +122,9 @@ function loadCategories() {
             <span>${category.icon}</span>
             <span>${category.name}</span>
         `;
-        button.addEventListener('click', function() {
+        button.addEventListener('click', async function() {
             currentCategory = category.id;
-            loadProducts(currentCategory);
+            await loadProducts(currentCategory);
             
             // Update active state
             document.querySelectorAll('.category-btn').forEach(btn => {
@@ -137,11 +137,17 @@ function loadCategories() {
 }
 
 // ==================== PRODUCTS ====================
-function loadProducts(categoryId) {
+async function loadProducts(categoryId) {
     const productsGrid = document.getElementById('products-grid');
     if (!productsGrid) return;
     
-    productsGrid.innerHTML = '';
+    // Show loading state
+    productsGrid.innerHTML = `
+        <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: #b6aa8e;"></i>
+            <p style="margin-top: 1rem; color: #6b7280;">جاري تحميل المنتجات...</p>
+        </div>
+    `;
     
     const products = getProductsByCategory(categoryId);
     
@@ -158,13 +164,16 @@ function loadProducts(categoryId) {
         return;
     }
     
-    products.forEach(product => {
-        const productCard = createProductCard(product);
+    productsGrid.innerHTML = '';
+    
+    // Load products one by one (async for Firebase reviews)
+    for (const product of products) {
+        const productCard = await createProductCard(product);
         productsGrid.appendChild(productCard);
-    });
+    }
 }
 
-function createProductCard(product) {
+async function createProductCard(product) {
     const card = document.createElement('div');
     card.className = 'product-card';
     
@@ -179,14 +188,6 @@ function createProductCard(product) {
     if (product.inStock) {
         badges += `<span class="product-badge badge-instock">متوفر</span>`;
     }
-    
-    // Product rating
-    const rating = product.rating ? `
-        <div class="product-rating">
-            <i class="fas fa-star"></i>
-            <span>${product.rating}</span>
-        </div>
-    ` : '';
     
     // Product benefits (show first 2)
     let benefitsHtml = '';
@@ -210,13 +211,35 @@ function createProductCard(product) {
     const originalPriceHtml = product.originalPrice ? 
         `<span class="price-original">${product.originalPrice} ${STORE_CONFIG.currency}</span>` : '';
     
+    // Get reviews summary HTML (async - waits for Firebase)
+    let reviewsHTML = '';
+    if (typeof createProductReviewsSummaryHTML !== 'undefined') {
+        try {
+            reviewsHTML = await createProductReviewsSummaryHTML(product.id);
+        } catch (error) {
+            console.error('Error loading reviews for product:', product.id, error);
+            // Fallback if Firebase fails
+            reviewsHTML = `
+                <div class="product-reviews-summary" onclick="showReviewModal('${product.id}')">
+                    <div class="rating-stars">
+                        <i class="far fa-star star-empty"></i>
+                        <i class="far fa-star star-empty"></i>
+                        <i class="far fa-star star-empty"></i>
+                        <i class="far fa-star star-empty"></i>
+                        <i class="far fa-star star-empty"></i>
+                    </div>
+                    <span class="review-count">لا توجد تقييمات</span>
+                </div>
+            `;
+        }
+    }
+    
     card.innerHTML = `
         <div class="product-image-wrapper">
-            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/400x300?text=صورة'">
             <div class="product-badges">
                 ${badges}
             </div>
-            ${rating}
         </div>
         <div class="product-info">
             <span class="product-category">
@@ -226,6 +249,9 @@ function createProductCard(product) {
             <h3 class="product-name">${product.name}</h3>
             ${product.weight ? `<p class="product-weight">الوزن: ${product.weight}</p>` : ''}
             <p class="product-description">${product.description}</p>
+            
+            ${reviewsHTML}
+            
             ${benefitsHtml}
             <div class="product-footer">
                 <div class="product-price-wrapper">
@@ -240,6 +266,10 @@ function createProductCard(product) {
                     أضف للسلة
                 </button>
             </div>
+            <button class="view-reviews-btn" onclick="event.stopPropagation(); showReviewModal('${product.id}')">
+                <i class="fas fa-star"></i>
+                التقييمات والمراجعات
+            </button>
         </div>
     `;
     
@@ -288,5 +318,8 @@ window.addToCartGlobal = function(productId) {
     addProductToCart(product);
     showNotification('تم إضافة المنتج للسلة');
 }
+
+// Make loadProducts global so reviews can reload products after adding a review
+window.loadProducts = loadProducts;
 
 console.log('✅ app.js loaded successfully');
