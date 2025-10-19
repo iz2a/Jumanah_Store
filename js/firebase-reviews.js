@@ -1,6 +1,12 @@
 // ==================== FIREBASE REVIEWS SYSTEM ====================
 
-import { db, collection, addDoc, getDocs, query, where, orderBy, serverTimestamp } from './firebase-config.js';
+// Wait for Firebase to be initialized
+setTimeout(initializeReviews, 1000);
+
+function initializeReviews() {
+    console.log('Initializing Firebase Reviews...');
+    console.log('Firebase DB available:', window.firebaseDb);
+}
 
 // Cache for reviews (reduces Firebase reads)
 let reviewsCache = {};
@@ -8,20 +14,28 @@ let reviewsCache = {};
 // ==================== GET REVIEWS FROM FIREBASE ====================
 
 async function getProductReviews(productId) {
+    console.log('Getting reviews for product:', productId);
+    
     // Check cache first
     if (reviewsCache[productId]) {
+        console.log('Returning cached reviews:', reviewsCache[productId].length);
         return reviewsCache[productId];
     }
     
     try {
-        const reviewsRef = collection(db, 'reviews');
-        const q = query(
+        if (!window.firebaseDb) {
+            console.error('Firebase not initialized yet');
+            return [];
+        }
+        
+        const reviewsRef = window.firebaseCollection(window.firebaseDb, 'reviews');
+        const q = window.firebaseQuery(
             reviewsRef, 
-            where('productId', '==', productId),
-            orderBy('timestamp', 'desc')
+            window.firebaseWhere('productId', '==', productId),
+            window.firebaseOrderBy('timestamp', 'desc')
         );
         
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await window.firebaseGetDocs(q);
         const reviews = [];
         
         querySnapshot.forEach((doc) => {
@@ -34,10 +48,10 @@ async function getProductReviews(productId) {
         // Cache the reviews
         reviewsCache[productId] = reviews;
         
-        console.log(`Loaded ${reviews.length} reviews for product ${productId}`);
+        console.log(`✅ Loaded ${reviews.length} reviews for product ${productId}`, reviews);
         return reviews;
     } catch (error) {
-        console.error('Error getting reviews:', error);
+        console.error('❌ Error getting reviews:', error);
         return [];
     }
 }
@@ -45,6 +59,8 @@ async function getProductReviews(productId) {
 // ==================== ADD REVIEW TO FIREBASE ====================
 
 async function addReview(productId, rating, comment, userName) {
+    console.log('Adding review:', { productId, rating, comment, userName });
+    
     // Validation
     if (!productId || !rating || !comment) {
         throw new Error('Missing required fields');
@@ -58,40 +74,37 @@ async function addReview(productId, rating, comment, userName) {
         throw new Error('Comment must be at least 5 characters');
     }
     
-    // Bad words filter (basic)
-    const badWords = ['spam', 'fake', 'scam']; // Add more as needed
-    const lowerComment = comment.toLowerCase();
-    const hasBadWords = badWords.some(word => lowerComment.includes(word));
-    
-    if (hasBadWords) {
-        throw new Error('Comment contains inappropriate content');
-    }
-    
     try {
+        if (!window.firebaseDb) {
+            throw new Error('Firebase not initialized');
+        }
+        
         const review = {
             productId: productId,
             rating: parseInt(rating),
             comment: comment.trim(),
             userName: userName.trim() || 'مستخدم',
-            timestamp: serverTimestamp(),
-            helpful: 0,
-            userAgent: navigator.userAgent.substring(0, 100) // For spam detection
+            timestamp: window.firebaseServerTimestamp(),
+            helpful: 0
         };
         
-        const docRef = await addDoc(collection(db, 'reviews'), review);
+        const docRef = await window.firebaseAddDoc(
+            window.firebaseCollection(window.firebaseDb, 'reviews'), 
+            review
+        );
         
         // Clear cache for this product
         delete reviewsCache[productId];
         
-        console.log('Review added with ID:', docRef.id);
+        console.log('✅ Review added with ID:', docRef.id);
         
         return {
             id: docRef.id,
             ...review,
-            timestamp: new Date() // Use local time for immediate display
+            timestamp: new Date()
         };
     } catch (error) {
-        console.error('Error adding review:', error);
+        console.error('❌ Error adding review:', error);
         throw error;
     }
 }
@@ -122,22 +135,26 @@ function getRatingDistribution(reviews) {
 function formatArabicDate(timestamp) {
     if (!timestamp) return 'الآن';
     
-    // Handle Firestore Timestamp
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    const now = new Date();
-    const diffTime = Math.abs(now - date);
-    const diffMinutes = Math.floor(diffTime / (1000 * 60));
-    const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffMinutes < 1) return 'الآن';
-    if (diffMinutes < 60) return `منذ ${diffMinutes} ${diffMinutes === 1 ? 'دقيقة' : 'دقائق'}`;
-    if (diffHours < 24) return `منذ ${diffHours} ${diffHours === 1 ? 'ساعة' : 'ساعات'}`;
-    if (diffDays === 1) return 'أمس';
-    if (diffDays < 7) return `منذ ${diffDays} أيام`;
-    if (diffDays < 30) return `منذ ${Math.floor(diffDays / 7)} ${Math.floor(diffDays / 7) === 1 ? 'أسبوع' : 'أسابيع'}`;
-    if (diffDays < 365) return `منذ ${Math.floor(diffDays / 30)} ${Math.floor(diffDays / 30) === 1 ? 'شهر' : 'شهور'}`;
-    return `منذ ${Math.floor(diffDays / 365)} ${Math.floor(diffDays / 365) === 1 ? 'سنة' : 'سنوات'}`;
+    try {
+        // Handle Firestore Timestamp
+        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffMinutes = Math.floor(diffTime / (1000 * 60));
+        const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffMinutes < 1) return 'الآن';
+        if (diffMinutes < 60) return `منذ ${diffMinutes} ${diffMinutes === 1 ? 'دقيقة' : 'دقائق'}`;
+        if (diffHours < 24) return `منذ ${diffHours} ${diffHours === 1 ? 'ساعة' : 'ساعات'}`;
+        if (diffDays === 1) return 'أمس';
+        if (diffDays < 7) return `منذ ${diffDays} أيام`;
+        if (diffDays < 30) return `منذ ${Math.floor(diffDays / 7)} ${Math.floor(diffDays / 7) === 1 ? 'أسبوع' : 'أسابيع'}`;
+        if (diffDays < 365) return `منذ ${Math.floor(diffDays / 30)} ${Math.floor(diffDays / 30) === 1 ? 'شهر' : 'شهور'}`;
+        return `منذ ${Math.floor(diffDays / 365)} ${Math.floor(diffDays / 365) === 1 ? 'سنة' : 'سنوات'}`;
+    } catch (e) {
+        return 'الآن';
+    }
 }
 
 // ==================== CREATE STARS HTML ====================
@@ -168,6 +185,8 @@ async function createProductReviewsSummaryHTML(productId) {
     const avgRating = calculateAverageRating(reviews);
     const reviewCount = reviews.length;
     
+    console.log(`Product ${productId}: ${reviewCount} reviews, avg: ${avgRating}`);
+    
     if (reviewCount === 0) {
         return `
             <div class="product-reviews-summary" onclick="showReviewModal('${productId}')">
@@ -197,8 +216,13 @@ async function createProductReviewsSummaryHTML(productId) {
 // ==================== SHOW REVIEW MODAL ====================
 
 async function showReviewModal(productId) {
+    console.log('Opening review modal for:', productId);
+    
     const product = getProductById(productId);
-    if (!product) return;
+    if (!product) {
+        console.error('Product not found:', productId);
+        return;
+    }
     
     // Show loading state
     const loadingModal = document.createElement('div');
@@ -218,6 +242,8 @@ async function showReviewModal(productId) {
     const reviews = await getProductReviews(productId);
     const avgRating = calculateAverageRating(reviews);
     const distribution = getRatingDistribution(reviews);
+    
+    console.log('Reviews loaded:', reviews);
     
     // Remove loading modal
     loadingModal.remove();
@@ -423,6 +449,8 @@ function setupRatingStars() {
 window.submitReview = async function(event, productId) {
     event.preventDefault();
     
+    console.log('Submitting review for product:', productId);
+    
     const rating = parseInt(document.getElementById('rating-value').value);
     const comment = document.getElementById('review-comment').value.trim();
     const userName = document.getElementById('user-name').value.trim();
@@ -454,6 +482,8 @@ window.submitReview = async function(event, productId) {
     try {
         // Add review to Firebase
         await addReview(productId, rating, comment, userName);
+        
+        console.log('✅ Review submitted successfully');
         
         // Show success message
         if (typeof showNotification === 'function') {
@@ -493,11 +523,12 @@ window.submitReview = async function(event, productId) {
         
         // Reload products to update the product card rating
         if (typeof loadProducts === 'function' && typeof currentCategory !== 'undefined') {
+            console.log('Reloading products...');
             loadProducts(currentCategory);
         }
         
     } catch (error) {
-        console.error('Error submitting review:', error);
+        console.error('❌ Error submitting review:', error);
         if (typeof showNotification === 'function') {
             showNotification('حدث خطأ، الرجاء المحاولة مرة أخرى', 'warning');
         } else {
@@ -523,5 +554,6 @@ window.closeReviewModal = function() {
 // Make functions global
 window.showReviewModal = showReviewModal;
 window.createProductReviewsSummaryHTML = createProductReviewsSummaryHTML;
+window.getProductReviews = getProductReviews;
 
 console.log('✅ Firebase Reviews System loaded successfully');
