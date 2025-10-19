@@ -2,7 +2,16 @@
 
 // Import Firebase modules from CDN
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, limit, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+import { 
+    getFirestore, 
+    collection, 
+    addDoc, 
+    getDocs, 
+    query, 
+    where, 
+    orderBy, 
+    serverTimestamp 
+} from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,6 +30,14 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Export for use in other files
-export { db, collection, addDoc, getDocs, query, where, orderBy, limit, serverTimestamp };
+window.firebaseDb = db;
+window.firebaseCollection = collection;
+window.firebaseAddDoc = addDoc;
+window.firebaseGetDocs = getDocs;
+window.firebaseQuery = query;
+window.firebaseWhere = where;
+window.firebaseOrderBy = orderBy;
+window.firebaseServerTimestamp = serverTimestamp;
 
 console.log('✅ Firebase initialized successfully');
+console.log('Firebase DB:', db);
