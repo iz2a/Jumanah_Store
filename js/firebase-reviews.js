@@ -1,7 +1,11 @@
 // ==================== FIREBASE REVIEWS SYSTEM ====================
 
 // Wait for Firebase to be initialized
-setTimeout(initializeReviews, 1000);
+let firebaseReady = false;
+setTimeout(() => {
+    firebaseReady = true;
+    console.log('✅ Firebase Reviews System Ready');
+}, 2000);
 
 function initializeReviews() {
     console.log('Initializing Firebase Reviews...');
@@ -14,17 +18,24 @@ let reviewsCache = {};
 // ==================== GET REVIEWS FROM FIREBASE ====================
 
 async function getProductReviews(productId) {
-    console.log('Getting reviews for product:', productId);
+    console.log('🔍 Getting reviews for product:', productId);
     
     // Check cache first
     if (reviewsCache[productId]) {
-        console.log('Returning cached reviews:', reviewsCache[productId].length);
+        console.log('📦 Returning cached reviews:', reviewsCache[productId].length);
         return reviewsCache[productId];
     }
     
     try {
+        // Wait for Firebase to be ready
+        let attempts = 0;
+        while (!window.firebaseDb && attempts < 50) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+            attempts++;
+        }
+        
         if (!window.firebaseDb) {
-            console.error('Firebase not initialized yet');
+            console.error('❌ Firebase not initialized after waiting');
             return [];
         }
         
@@ -39,19 +50,25 @@ async function getProductReviews(productId) {
         const reviews = [];
         
         querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            console.log('📄 Review document data:', data);
             reviews.push({
                 id: doc.id,
-                ...doc.data()
+                ...data
             });
         });
         
         // Cache the reviews
         reviewsCache[productId] = reviews;
         
-        console.log(`✅ Loaded ${reviews.length} reviews for product ${productId}`, reviews);
+        console.log(`✅ Loaded ${reviews.length} reviews for product ${productId}`);
+        if (reviews.length > 0) {
+            console.log('Sample review:', reviews[0]);
+        }
         return reviews;
     } catch (error) {
         console.error('❌ Error getting reviews:', error);
+        console.error('Error details:', error.message, error.stack);
         return [];
     }
 }
@@ -59,7 +76,7 @@ async function getProductReviews(productId) {
 // ==================== ADD REVIEW TO FIREBASE ====================
 
 async function addReview(productId, rating, comment, userName) {
-    console.log('Adding review:', { productId, rating, comment, userName });
+    console.log('📝 Adding review:', { productId, rating, comment, userName });
     
     // Validation
     if (!productId || !rating || !comment) {
@@ -87,6 +104,8 @@ async function addReview(productId, rating, comment, userName) {
             timestamp: window.firebaseServerTimestamp(),
             helpful: 0
         };
+        
+        console.log('💾 Saving review to Firebase:', review);
         
         const docRef = await window.firebaseAddDoc(
             window.firebaseCollection(window.firebaseDb, 'reviews'), 
@@ -181,42 +200,56 @@ function createStarsHTML(rating, size = 'normal') {
 // ==================== CREATE PRODUCT REVIEWS SUMMARY ====================
 
 async function createProductReviewsSummaryHTML(productId) {
-    const reviews = await getProductReviews(productId);
-    const avgRating = calculateAverageRating(reviews);
-    const reviewCount = reviews.length;
+    console.log('🎨 Creating reviews summary HTML for:', productId);
     
-    console.log(`Product ${productId}: ${reviewCount} reviews, avg: ${avgRating}`);
-    
-    if (reviewCount === 0) {
+    try {
+        const reviews = await getProductReviews(productId);
+        const avgRating = calculateAverageRating(reviews);
+        const reviewCount = reviews.length;
+        
+        console.log(`Product ${productId}: ${reviewCount} reviews, avg: ${avgRating}`);
+        
+        if (reviewCount === 0) {
+            return `
+                <div class="product-reviews-summary" onclick="showReviewModal('${productId}')">
+                    <div class="rating-stars">
+                        ${createStarsHTML(0)}
+                    </div>
+                    <span class="review-count">لا توجد تقييمات - كن أول من يقيم</span>
+                </div>
+            `;
+        }
+        
+        const reviewText = reviewCount === 1 ? 'تقييم واحد' : 
+                           reviewCount === 2 ? 'تقييمان' : 
+                           `${reviewCount} تقييمات`;
+        
+        return `
+            <div class="product-reviews-summary" onclick="showReviewModal('${productId}')">
+                <div class="rating-stars">
+                    ${createStarsHTML(parseFloat(avgRating))}
+                </div>
+                <span class="rating-number">${avgRating}</span>
+                <span class="review-count">(${reviewText})</span>
+            </div>
+        `;
+    } catch (error) {
+        console.error('Error creating reviews summary:', error);
         return `
             <div class="product-reviews-summary" onclick="showReviewModal('${productId}')">
                 <div class="rating-stars">
                     ${createStarsHTML(0)}
                 </div>
-                <span class="review-count">لا توجد تقييمات - كن أول من يقيم</span>
+                <span class="review-count">لا توجد تقييمات</span>
             </div>
         `;
     }
-    
-    const reviewText = reviewCount === 1 ? 'تقييم واحد' : 
-                       reviewCount === 2 ? 'تقييمان' : 
-                       `${reviewCount} تقييمات`;
-    
-    return `
-        <div class="product-reviews-summary" onclick="showReviewModal('${productId}')">
-            <div class="rating-stars">
-                ${createStarsHTML(parseFloat(avgRating))}
-            </div>
-            <span class="rating-number">${avgRating}</span>
-            <span class="review-count">(${reviewText})</span>
-        </div>
-    `;
 }
 
 // ==================== SHOW REVIEW MODAL ====================
 
 async function showReviewModal(productId) {
-    console.log('Opening review modal for:', productId);
+    console.log('🔓 Opening review modal for:', productId);
     
     const product = getProductById(productId);
     if (!product) {
@@ -238,91 +271,98 @@ async function showReviewModal(productId) {
     document.body.appendChild(loadingModal);
     document.body.style.overflow = 'hidden';
     
-    // Load reviews from Firebase
-    const reviews = await getProductReviews(productId);
-    const avgRating = calculateAverageRating(reviews);
-    const distribution = getRatingDistribution(reviews);
-    
-    console.log('Reviews loaded:', reviews);
-    
-    // Remove loading modal
-    loadingModal.remove();
-    
-    // Create actual modal
-    const modal = document.createElement('div');
-    modal.className = 'review-modal-overlay';
-    modal.innerHTML = `
-        <div class="review-modal">
-            <div class="review-modal-header">
-                <h3>${product.name} - التقييمات</h3>
-                <button class="review-modal-close" onclick="closeReviewModal()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="review-modal-stats">
-                <div class="overall-rating">
-                    <div class="rating-number-large">${avgRating}</div>
-                    <div class="rating-stars-large">
-                        ${createStarsHTML(parseFloat(avgRating), 'large')}
-                    </div>
-                    <div class="review-count-text">${reviews.length} ${reviews.length === 1 ? 'تقييم' : reviews.length === 2 ? 'تقييمان' : 'تقييمات'}</div>
-                </div>
-                
-                <div class="rating-distribution">
-                    ${createRatingDistributionHTML(distribution, reviews.length)}
-                </div>
-            </div>
-            
-            <div class="review-modal-body">
-                <button class="write-review-btn" onclick="toggleReviewForm()">
-                    <i class="fas fa-pen"></i>
-                    اكتب تقييمك
-                </button>
-                
-                <form id="review-form" style="display: none;" onsubmit="submitReview(event, '${productId}')">
-                    <div class="form-group">
-                        <label>التقييم *</label>
-                        <div class="rating-input" id="rating-input">
-                            <i class="far fa-star" data-rating="1"></i>
-                            <i class="far fa-star" data-rating="2"></i>
-                            <i class="far fa-star" data-rating="3"></i>
-                            <i class="far fa-star" data-rating="4"></i>
-                            <i class="far fa-star" data-rating="5"></i>
-                        </div>
-                        <input type="hidden" id="rating-value" name="rating" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>الاسم (اختياري)</label>
-                        <input type="text" id="user-name" placeholder="اسمك" class="form-input" maxlength="50">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>التعليق * (5 أحرف على الأقل)</label>
-                        <textarea id="review-comment" placeholder="شاركنا رأيك في المنتج..." class="form-textarea" rows="4" required minlength="5" maxlength="500"></textarea>
-                    </div>
-                    
-                    <button type="submit" class="submit-review-btn">
-                        <i class="fas fa-paper-plane"></i>
-                        إرسال التقييم
+    try {
+        // Load reviews from Firebase
+        const reviews = await getProductReviews(productId);
+        const avgRating = calculateAverageRating(reviews);
+        const distribution = getRatingDistribution(reviews);
+        
+        console.log('✅ Reviews loaded for modal:', reviews);
+        
+        // Remove loading modal
+        loadingModal.remove();
+        
+        // Create actual modal
+        const modal = document.createElement('div');
+        modal.className = 'review-modal-overlay';
+        modal.innerHTML = `
+            <div class="review-modal">
+                <div class="review-modal-header">
+                    <h3>${product.name} - التقييمات</h3>
+                    <button class="review-modal-close" onclick="closeReviewModal()">
+                        <i class="fas fa-times"></i>
                     </button>
-                </form>
-            </div>
-            
-            <div class="review-modal-reviews">
-                <h4>آراء العملاء</h4>
-                <div id="reviews-list">
-                    ${createReviewsListHTML(reviews)}
+                </div>
+                
+                <div class="review-modal-stats">
+                    <div class="overall-rating">
+                        <div class="rating-number-large">${avgRating}</div>
+                        <div class="rating-stars-large">
+                            ${createStarsHTML(parseFloat(avgRating), 'large')}
+                        </div>
+                        <div class="review-count-text">${reviews.length} ${reviews.length === 1 ? 'تقييم' : reviews.length === 2 ? 'تقييمان' : 'تقييمات'}</div>
+                    </div>
+                    
+                    <div class="rating-distribution">
+                        ${createRatingDistributionHTML(distribution, reviews.length)}
+                    </div>
+                </div>
+                
+                <div class="review-modal-body">
+                    <button class="write-review-btn" onclick="toggleReviewForm()">
+                        <i class="fas fa-pen"></i>
+                        اكتب تقييمك
+                    </button>
+                    
+                    <form id="review-form" style="display: none;" onsubmit="submitReview(event, '${productId}')">
+                        <div class="form-group">
+                            <label>التقييم *</label>
+                            <div class="rating-input" id="rating-input">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                            <input type="hidden" id="rating-value" name="rating" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>الاسم (اختياري)</label>
+                            <input type="text" id="user-name" placeholder="اسمك" class="form-input" maxlength="50">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>التعليق * (5 أحرف على الأقل)</label>
+                            <textarea id="review-comment" placeholder="شاركنا رأيك في المنتج..." class="form-textarea" rows="4" required minlength="5" maxlength="500"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-review-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            إرسال التقييم
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="review-modal-reviews">
+                    <h4>آراء العملاء</h4>
+                    <div id="reviews-list">
+                        ${createReviewsListHTML(reviews)}
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    // Setup rating stars interaction
-    setTimeout(() => setupRatingStars(), 100);
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Setup rating stars interaction
+        setTimeout(() => setupRatingStars(), 100);
+    } catch (error) {
+        console.error('Error showing review modal:', error);
+        loadingModal.remove();
+        document.body.style.overflow = '';
+        alert('حدث خطأ في تحميل التقييمات');
+    }
 }
 
 // ==================== CREATE RATING DISTRIBUTION HTML ====================
@@ -449,7 +489,7 @@ function setupRatingStars() {
 window.submitReview = async function(event, productId) {
     event.preventDefault();
     
-    console.log('Submitting review for product:', productId);
+    console.log('📤 Submitting review for product:', productId);
     
     const rating = parseInt(document.getElementById('rating-value').value);
     const comment = document.getElementById('review-comment').value.trim();
@@ -481,9 +521,9 @@ window.submitReview = async function(event, productId) {
     
     try {
         // Add review to Firebase
-        await addReview(productId, rating, comment, userName);
+        const newReview = await addReview(productId, rating, comment, userName);
         
-        console.log('✅ Review submitted successfully');
+        console.log('✅ Review submitted successfully:', newReview);
         
         // Show success message
         if (typeof showNotification === 'function') {
@@ -523,8 +563,8 @@ window.submitReview = async function(event, productId) {
         
         // Reload products to update the product card rating
         if (typeof loadProducts === 'function' && typeof currentCategory !== 'undefined') {
-            console.log('Reloading products...');
-            loadProducts(currentCategory);
+            console.log('🔄 Reloading products...');
+            setTimeout(() => loadProducts(currentCategory), 500);
         }
         
     } catch (error) {
