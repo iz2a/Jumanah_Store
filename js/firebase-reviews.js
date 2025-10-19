@@ -40,22 +40,34 @@ async function getProductReviews(productId) {
         }
         
         const reviewsRef = window.firebaseCollection(window.firebaseDb, 'reviews');
+        
+        // IMPORTANT: Only use where() clause, NO orderBy to avoid index requirement
         const q = window.firebaseQuery(
             reviewsRef, 
-            window.firebaseWhere('productId', '==', productId),
-            window.firebaseOrderBy('timestamp', 'desc')
+            window.firebaseWhere('productId', '==', productId)
         );
+        
+        console.log('📡 Executing Firebase query for productId:', productId);
         
         const querySnapshot = await window.firebaseGetDocs(q);
         const reviews = [];
         
+        console.log('📊 Query returned documents:', querySnapshot.size);
+        
         querySnapshot.forEach((doc) => {
             const data = doc.data();
-            console.log('📄 Review document data:', data);
+            console.log('📄 Review document:', doc.id, data);
             reviews.push({
                 id: doc.id,
                 ...data
             });
+        });
+        
+        // Sort reviews by timestamp in JavaScript (newest first)
+        reviews.sort((a, b) => {
+            const timeA = a.timestamp?.toMillis ? a.timestamp.toMillis() : 0;
+            const timeB = b.timestamp?.toMillis ? b.timestamp.toMillis() : 0;
+            return timeB - timeA; // descending order (newest first)
         });
         
         // Cache the reviews
@@ -207,7 +219,7 @@ async function createProductReviewsSummaryHTML(productId) {
         const avgRating = calculateAverageRating(reviews);
         const reviewCount = reviews.length;
         
-        console.log(`Product ${productId}: ${reviewCount} reviews, avg: ${avgRating}`);
+        console.log(`✨ Product ${productId}: ${reviewCount} reviews, avg: ${avgRating}`);
         
         if (reviewCount === 0) {
             return `
