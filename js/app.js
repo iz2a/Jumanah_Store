@@ -5,6 +5,7 @@ let currentCategory = 'all';
 
 // ==================== INITIALIZATION ====================
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Initializing Jumanah Store...');
     initializeApp();
 });
 
@@ -15,7 +16,12 @@ async function initializeApp() {
     // Load categories
     loadCategories();
     
+    // Wait a bit for Firebase to initialize
+    console.log('⏳ Waiting for Firebase initialization...');
+    await new Promise(resolve => setTimeout(resolve, 2500));
+    
     // Load products
+    console.log('📦 Loading products...');
     await loadProducts(currentCategory);
     
     // Initialize cart
@@ -141,6 +147,8 @@ async function loadProducts(categoryId) {
     const productsGrid = document.getElementById('products-grid');
     if (!productsGrid) return;
     
+    console.log('📂 Loading products for category:', categoryId);
+    
     // Show loading state
     productsGrid.innerHTML = `
         <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
@@ -171,6 +179,8 @@ async function loadProducts(categoryId) {
         const productCard = await createProductCard(product);
         productsGrid.appendChild(productCard);
     }
+    
+    console.log('✅ Products loaded successfully');
 }
 
 async function createProductCard(product) {
@@ -215,9 +225,11 @@ async function createProductCard(product) {
     let reviewsHTML = '';
     if (typeof createProductReviewsSummaryHTML !== 'undefined') {
         try {
+            console.log(`🔍 Fetching reviews for product: ${product.id}`);
             reviewsHTML = await createProductReviewsSummaryHTML(product.id);
+            console.log(`✅ Reviews HTML created for: ${product.id}`);
         } catch (error) {
-            console.error('Error loading reviews for product:', product.id, error);
+            console.error('❌ Error loading reviews for product:', product.id, error);
             // Fallback if Firebase fails
             reviewsHTML = `
                 <div class="product-reviews-summary" onclick="showReviewModal('${product.id}')">
@@ -232,6 +244,20 @@ async function createProductCard(product) {
                 </div>
             `;
         }
+    } else {
+        console.warn('⚠️ createProductReviewsSummaryHTML function not available yet');
+        reviewsHTML = `
+            <div class="product-reviews-summary" onclick="showReviewModal('${product.id}')">
+                <div class="rating-stars">
+                    <i class="far fa-star star-empty"></i>
+                    <i class="far fa-star star-empty"></i>
+                    <i class="far fa-star star-empty"></i>
+                    <i class="far fa-star star-empty"></i>
+                    <i class="far fa-star star-empty"></i>
+                </div>
+                <span class="review-count">لا توجد تقييمات</span>
+            </div>
+        `;
     }
     
     card.innerHTML = `
